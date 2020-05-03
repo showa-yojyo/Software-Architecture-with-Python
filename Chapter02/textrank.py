@@ -4,7 +4,8 @@
 
 import operator
 
-class TextRank(object):
+
+class TextRank:
     """ Accept text files as inputs and rank them in
     terms of how much a word occurs in them """
 
@@ -20,11 +21,13 @@ class TextRank(object):
         occurs = []
 
         for fpath in self.filenames:
-            data = open(fpath).read()
-            words = map(lambda x: x.lower().strip(), data.split())
+            with open(fpath) as f:
+                data = f.read()
+            words = [x.lower().strip() for x in data.split()]
             # Filter empty words
             count = words.count(self.word)
             occurs.append((fpath, count))
 
         # Return in sorted order
+        # このコードの急所はここの key=operator.itemgetter(1)
         return sorted(occurs, key=operator.itemgetter(1), reverse=True)

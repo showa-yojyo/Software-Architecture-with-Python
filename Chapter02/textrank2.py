@@ -7,6 +7,7 @@
 import operator
 from rankbase import RankBase
 
+
 class TextRank(object):
     """ Accept text files as inputs and rank them in
     terms of how much a word occurs in them """
@@ -21,7 +22,7 @@ class TextRank(object):
         occurences """
 
         occurs = []
-        
+
         for fpath in self.filenames:
             data = open(fpath).read()
             words = map(lambda x: x.lower().strip(), data.split())
@@ -31,6 +32,7 @@ class TextRank(object):
 
         # Return in sorted order
         return sorted(occurs, key=operator.itemgetter(1), reverse=True)
+
 
 class TextRank(RankBase):
     """ Accept text files as inputs and rank them in
@@ -48,10 +50,11 @@ class TextRank(RankBase):
         texts = map(lambda x: open(x).read(), self.filenames)
         occurs = super(TextRank, self).rank(*texts)
         # Convert to filename list
-        occurs = [(self.filenames[x],y) for x,y in occurs.items()]
-            
+        occurs = [(self.filenames[x], y) for x, y in occurs.items()]
+
         return self.sort(occurs)
+
 
 if __name__ == "__main__":
     import sys
-    print TextRank('common',*sys.argv[1:]).rank()
+    print(TextRank('common', *sys.argv[1:]).rank())

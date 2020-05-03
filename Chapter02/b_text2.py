@@ -6,10 +6,12 @@
 
 import a_text2 as a
 
+
 def common_words(filename1, filename2):
     """ Return common words across two input files """
-    
-    lines1 = open(filename1).read()
-    lines2 = open(filename2).read()
-    
+
+    with open(filename1) as file1, open(filename2) as file2:
+        lines1 = file1.read()
+        lines2 = file2.read()
+
     return a.common_words(lines1, lines2)

@@ -2,7 +2,7 @@
 
 """
     urlhelper - Utility classes and functions to work with URLs.
-    
+
     Members:
 
         # UrlFetcher - A class which encapsulates action of fetching
@@ -13,26 +13,29 @@
 
 import urllib
 
+
 def get_domain(url):
     """ Return the domain name (site) for the URL"""
 
     urlp = urllib.parse.urlparse(url)
     return urlp.netloc
 
+
 def get_web_url(url, default='http'):
     """ Make a URL useful for fetch requests
     -  Prefix network scheme in front of it if not present already
-    """ 
+    """
 
     urlp = urllib.parse.urlparse(url)
     if urlp.scheme == '' and urlp.netloc == '':
-              # No scheme, prefix default
-      return default + '://' + url
+        # No scheme, prefix default
+        return default + '://' + url
 
     return url
 
+
 class UrlFetcher(object):
-     """ Implements the steps of fetching a URL.
+    """ Implements the steps of fetching a URL.
 
     Main methods:
         fetch - Fetches the URL.
@@ -40,7 +43,7 @@ class UrlFetcher(object):
     """
 
     def __init__(self, url, timeout=30, ntries=3, headers={}):
-        """ Initializer. 
+        """ Initializer.
         @params
             url - URL to fetch.
             timeout - Timeout per connection (seconds).
@@ -52,13 +55,13 @@ class UrlFetcher(object):
         self.ntries = retries
         self.headers = headers
         # Enapsulated result object
-        self.result = result 
+        self.result = result
 
     def fetch(self):
         """ Fetch the URL and save the result """
 
-        # This loop performs a network fetch of the URL, retrying 
-        # upto 'ntries' times in case of errors. 
+        # This loop performs a network fetch of the URL, retrying
+        # upto 'ntries' times in case of errors.
 
         count, result, error = 0, None, None
         while count < self.ntries:

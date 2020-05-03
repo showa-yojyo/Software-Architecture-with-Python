@@ -2,3 +2,5 @@
 
 def power(x,y):
 	return x^y
+
+# これは正しくない。

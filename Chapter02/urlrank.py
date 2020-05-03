@@ -1,9 +1,10 @@
 # Code listing #18
 
 """ Module urlrank - Rank URLs in order of degree of a specific word frequency """
-    
+
 import operator
 import requests
+
 
 class UrlRank(object):
     """ Accept URLs as inputs and rank them in
@@ -21,6 +22,7 @@ class UrlRank(object):
         occurs = []
 
         for url in self.urls:
+            # この次の行しか textrank.py との違いはなかった。
             data = requests.get(url).content
             words = map(lambda x: x.lower().strip(), data.split())
             # Filter empty words

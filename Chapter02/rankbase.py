@@ -4,6 +4,7 @@
 
 import operator
 
+
 class RankBase(object):
     """ Accept text data as inputs and rank them in
     terms of how much a word occurs in them """
@@ -17,8 +18,8 @@ class RankBase(object):
         occurences """
 
         occurs = {}
-        
-        for idx,text in enumerate(texts):
+
+        for idx, text in enumerate(texts):
             # print text
             words = map(lambda x: x.lower().strip(), text.split())
             count = words.count(self.word)
@@ -30,5 +31,4 @@ class RankBase(object):
     def sort(self, occurs):
         """ Return the ranking data in sorted order """
 
-        return sorted(occurs, key=operator.itemgetter(1), reverse=True) 
-
+        return sorted(occurs, key=operator.itemgetter(1), reverse=True)

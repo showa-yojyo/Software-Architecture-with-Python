@@ -46,7 +46,7 @@ def find_optimal_route_to_my_office_from_home(start_time,
                              favorite_route))
 
 
-class C(object):
+class C:
     """ A class which does almost nothing """
 
     def __init__(self, x,y):
@@ -57,7 +57,6 @@ class C(object):
         pass
 
     def g(self, x, y):
-
         if self.x>x:
             return self.x+self.y
         elif x>self.x:
