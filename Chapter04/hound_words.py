@@ -6,19 +6,22 @@ Return top 10 most common words from the online text of the "The Hound of Basker
 
 """
 
-import requests, operator
+import requests
+import operator
 from collections import defaultdict, Counter
 
 print('Using defaultdict')
-text=requests.get('https://www.gutenberg.org/files/2852/2852-0.txt').text
-freq=defaultdict(int)
+text = requests.get('https://www.gutenberg.org/files/2852/2852-0.txt').text
+freq = defaultdict(int)
 
 for word in text.split():
-    if len(word.strip())==0: continue
+    if len(word.strip()) == 0:
+        continue
     freq[word.lower()] += 1
-    
-print(sorted(freq.items(), key=operator.itemgetter(1), reverse=True)[:10])
+
+print(sorted(list(freq.items()),
+             key=operator.itemgetter(1), reverse=True)[:10])
 
 print('Using Counter')
-freq=Counter(filter(None, map(lambda x:x.lower().strip(), text.split())))
+freq = Counter([_f for _f in [x.lower().strip() for x in text.split()] if _f])
 print(freq.most_common(10))

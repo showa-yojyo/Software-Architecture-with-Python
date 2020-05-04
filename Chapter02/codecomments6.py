@@ -9,4 +9,3 @@ def rms(varray=[]):
 
     squares = map(lambda x: x*x, varray)
     return pow(sum(squares), 0.5)
-

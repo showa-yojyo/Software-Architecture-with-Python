@@ -8,13 +8,15 @@ from selenium import webdriver
 import pytest
 import contextlib
 
+
 @contextlib.contextmanager
 @pytest.fixture(scope='session')
 def setup():
-    driver = webdriver.Firefox()    
+    driver = webdriver.Firefox()
     yield driver
     driver.quit()
-    
+
+
 def test_python_dotorg():
     """ Test details of python.org website URLs """
 
@@ -27,17 +29,9 @@ def test_python_dotorg():
         # Get the URL
         comm_url = comm_elem.get_attribute('href')
         # Visit it
-        print ('Community URL=>',comm_url)
+        print('Community URL=>', comm_url)
         driver.get(comm_url)
         # Assert its title
         assert driver.title == 'Our Community | Python.org'
         assert comm_url == 'https://www.python.org/community/'
-        
-         
-        
-    
-    
-
-
-
 

@@ -8,6 +8,7 @@ from unittest.mock import Mock, MagicMock
 import textsearcher
 import operator
 
+
 def test_search():
     """ Test search via a mock """
 
@@ -22,17 +23,17 @@ def test_search():
     searcher.db.configure.assert_called_with(max_items=100)
 
     canned_results = [('Python is wonderful', 0.4),
-                      ('I like Python',0.8),
+                      ('I like Python', 0.8),
                       ('Python is easy', 0.5),
                       ('Python can be learnt in an afternoon!', 0.3)]
     db.query = MagicMock(return_value=canned_results)
-    
+
     # Mock the results data
     keyword, num = 'python', 3
-    data = searcher.get_results(keyword,num=num)
+    data = searcher.get_results(keyword, num=num)
     searcher.db.query.assert_called_with(keyword)
 
-    # Verify data 
-    results = sorted(canned_results, key=operator.itemgetter(1), reverse=True)[:num]
+    # Verify data
+    results = sorted(
+        canned_results, key=operator.itemgetter(1), reverse=True)[:num]
     assert data == results
-

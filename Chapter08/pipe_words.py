@@ -11,16 +11,19 @@ Simple example of pipe and filter - A program counting words in a file
 from multiprocessing import Process, Pipe
 import sys
 
+
 def read(filename, conn):
     """ Read data from a file and send it to a pipe """
 
     conn.send(open(filename).read())
 
+
 def words(conn):
     """ Read data from a connection and print number of words """
 
     data = conn.recv()
-    print('Words',len(data.split()))
+    print('Words', len(data.split()))
+
 
 if __name__ == "__main__":
     parent, child = Pipe()
@@ -28,4 +31,5 @@ if __name__ == "__main__":
     p1.start()
     p2 = Process(target=words, args=(parent,))
     p2.start()
-    p1.join();p2.join()
+    p1.join()
+    p2.join()

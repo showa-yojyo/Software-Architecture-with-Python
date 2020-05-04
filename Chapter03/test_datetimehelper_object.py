@@ -1,8 +1,9 @@
 # Code Listing - #6
 
-""" Module test_datetimehelper_object - Simple test case with test class derived from object """ 
+""" Module test_datetimehelper_object - Simple test case with test class derived from object """
 
 import datetimehelper
+
 
 class TestDateTimeHelper(object):
 
@@ -11,4 +12,3 @@ class TestDateTimeHelper(object):
 
         obj = datetimehelper.DateTimeHelper()
         assert obj.us_to_indian('1/1/1') == '01/01/2001'
-

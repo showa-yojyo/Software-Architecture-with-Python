@@ -9,6 +9,7 @@ import operator
 
 from rankbase import RankBase
 
+
 class UrlRank(object):
     """ Accept URLs as inputs and rank them in
     terms of how much a word occurs in them """
@@ -23,7 +24,7 @@ class UrlRank(object):
         occurences """
 
         occurs = []
-        
+
         for url in self.urls:
             data = requests.get(url).content
             words = map(lambda x: x.lower().strip(), data.split())
@@ -33,6 +34,7 @@ class UrlRank(object):
 
         # Return in sorted order
         return sorted(occurs, key=operator.itemgetter(1), reverse=True)
+
 
 class UrlRank(RankBase):
     """ Accept URLs as inputs and rank them in
@@ -50,10 +52,11 @@ class UrlRank(RankBase):
         texts = map(lambda x: requests.get(x).content, self.urls)
         occurs = super(UrlRank, self).rank(*texts)
         # Convert to URLs list
-        occurs = [(self.urls[x],y) for x,y in occurs.items()]
+        occurs = [(self.urls[x], y) for x, y in occurs.items()]
 
         return self.sort(occurs)
 
+
 if __name__ == "__main__":
     import sys
-    print(UrlRank('python',*sys.argv[1:]).rank())
+    print(UrlRank('python', *sys.argv[1:]).rank())

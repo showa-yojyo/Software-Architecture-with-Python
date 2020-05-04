@@ -1,5 +1,6 @@
 # Code listing #5
 
+
 def fetch_url(url, ntries=3, timeout=30):
     """ Fetch a given url and return its contents.
 
@@ -29,7 +30,7 @@ def fetch_url(url, ntries=3, timeout=30):
             time.sleep(1)
 
     if result == None:
-        print("Error, could not fetch URL",url)
+        print("Error, could not fetch URL", url)
         # Return a tuple of (<return code>, <lasterror>)
         return (2, error)
 

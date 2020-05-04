@@ -8,6 +8,7 @@ and returning results
 
 import operator
 
+
 class TextSearcher(object):
     """ A class which performs a text search and returns results """
 
@@ -31,16 +32,15 @@ class TextSearcher(object):
 
         # If results in cache return from there
         if keyword in self.cache_dict:
-            print ('From cache')
+            print('From cache')
             return self.cache_dict[keyword]
-        
+
         results = self.db.query(keyword)
         # Results are list of (string, weightage) tuples
-        results = sorted(results, key=operator.itemgetter(1), reverse=True)[:num]
+        results = sorted(results, key=operator.itemgetter(1),
+                         reverse=True)[:num]
         # Cache it
         if self.cache:
             self.cache_dict[keyword] = results
-            
+
         return results
-    
-        

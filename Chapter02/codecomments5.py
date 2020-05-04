@@ -68,7 +68,7 @@ class UrlFetcher(object):
             try:
                 result = requests.get(self.url,
                                       timeout=self.timeout,
-                                      headers = self.headers)
+                                      headers=self.headers)
             except Exception as error:
                 print('Caught exception', error, 'trying again after a while')
                 # increment count

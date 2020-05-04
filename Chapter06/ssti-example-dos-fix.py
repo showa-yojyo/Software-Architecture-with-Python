@@ -19,13 +19,16 @@ TEMPLATE = '''
 </html>
 '''
 
+
 @app.route('/hello-ssti')
 def hello_ssti():
-    person = {'name':"world", 'secret': 'jo5gmvlligcZ5YZGenWnGcol8JnwhWZd2lJZYo=='} 
+    person = {'name': "world",
+              'secret': 'jo5gmvlligcZ5YZGenWnGcol8JnwhWZd2lJZYo=='}
     if request.args.get('name'):
         person['name'] = request.args.get('name')
 
     return render_template_string(TEMPLATE, person=person)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

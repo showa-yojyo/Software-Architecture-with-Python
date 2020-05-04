@@ -11,12 +11,13 @@ from eventlet.green import socket
 
 participants = set()
 
+
 def new_chat_channel(conn):
     """ New chat channel for a given connection """
-    
+
     data = conn.recv(1024)
     user = ''
-    
+
     while data:
         print("Chat:", data.strip())
         for p in participants:
@@ -28,7 +29,7 @@ def new_chat_channel(conn):
                         data_s = '\n#[' + user + ']>>> says ' + msg
                     else:
                         data_s = '(User %s connected)\n' % user
-                        
+
                     p.send(bytearray(data_s, 'utf-8'))
             except socket.error as e:
                 # ignore broken pipes, they just mean the participant
@@ -39,6 +40,7 @@ def new_chat_channel(conn):
 
     participants.remove(conn)
     print("Participant %s left chat." % user)
+
 
 if __name__ == "__main__":
     port = 3490
@@ -52,6 +54,6 @@ if __name__ == "__main__":
             participants.add(new_connection)
             print(eventlet.spawn(new_chat_channel,
                                  new_connection))
-            
+
     except (KeyboardInterrupt, SystemExit):
         print("ChatServer exiting.")

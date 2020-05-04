@@ -18,13 +18,14 @@ monkey.patch_all()
 
 participants = set()
 
+
 def new_chat_channel(conn, address):
     """ New chat channel for a given connection """
 
     participants.add(conn)
     data = conn.recv(1024)
     user = ''
-    
+
     while data:
         print("Chat:", data.strip())
         for p in participants:
@@ -36,8 +37,8 @@ def new_chat_channel(conn, address):
                         data_s = '\n#[' + user + ']>>> says ' + msg
                     else:
                         data_s = '(User %s connected)\n' % user
-                        
-                    p.send(bytearray(data_s, 'utf-8'))                  
+
+                    p.send(bytearray(data_s, 'utf-8'))
             except socket.error as e:
                 # ignore broken pipes, they just mean the participant
                 # closed its connection already
@@ -47,6 +48,7 @@ def new_chat_channel(conn, address):
 
     participants.remove(conn)
     print("Participant %s left chat." % user)
+
 
 if __name__ == "__main__":
     port = 3490

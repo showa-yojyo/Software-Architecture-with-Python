@@ -55,7 +55,7 @@ def memoize(func, ttl=86400):
         return result
 
     return wrapper
-    
+
 def filecache(func):
     """ A file caching decorator """
 
@@ -75,7 +75,7 @@ def filecache(func):
         return result
 
     return wrapper
-        
+
 def api_search(address, site='yellowpages.com'):
     """ API to search for a given business address
     on a site and return results """
@@ -113,10 +113,9 @@ def process_listings(listing, site):
 
 @memoize
 def func(address, site):
-    return list(map(lambda x: str(x).upper(),
-                    address.values()))
+    return [str(x).upper() for x in list(address.values())]
 
-    
+
 if __name__ == "__main__":
-    address = {u'city': u'Elloree', u'name': u'Sure Shine', u'country': u'US', u'longitude': -80.5720318, u'phone': u'8037077781', u'state': u'SC', u'street': u'5543 Old Hwy 6', u'postal_code': u'29047', u'latitude': 33.5309936, u'id': u'84134184-03e8-4cf6-ae32-0ed63f92b568'}
+    address = {'city': 'Elloree', 'name': 'Sure Shine', 'country': 'US', 'longitude': -80.5720318, 'phone': '8037077781', 'state': 'SC', 'street': '5543 Old Hwy 6', 'postal_code': '29047', 'latitude': 33.5309936, 'id': '84134184-03e8-4cf6-ae32-0ed63f92b568'}
     print(func(address, 'yellowpages.com'))
