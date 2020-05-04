@@ -13,4 +13,5 @@ def is_palindrome(in_string):
     # Case insensitive
     in_string = in_string.lower()
     # Check if string is same as in reverse
+    # TODO: このスライスは覚える。
     return in_string == in_string[-1::-1]

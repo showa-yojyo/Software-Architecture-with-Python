@@ -8,7 +8,7 @@ and returning results
 
 import operator
 
-
+# このスーパークラス (object) は冗長なので書いてはいけないと別の文献で言っている。
 class TextSearcher(object):
     """ A class which performs a text search and returns results """
 

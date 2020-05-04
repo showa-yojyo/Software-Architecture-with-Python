@@ -1,6 +1,8 @@
 # Code Listing #1
+# 末尾の get_url_data() だけ押さえれば十分。
+# open() したファイルを close() していないのが気になる。
 import os
-import hashlib
+import hashlib # これが急所
 import requests
 
 
@@ -11,6 +13,7 @@ def get_url_data(url):
     # which is a hash of the URL
     data = requests.get(url).content
     # Save it in a filename
+    # URL 文字列だけでファイル名を一貫性を保って決定する。
     filename = hashlib.md5(url).hexdigest()
     open(filename, 'w').write(data)
     return data

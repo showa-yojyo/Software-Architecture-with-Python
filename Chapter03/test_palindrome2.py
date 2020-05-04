@@ -6,7 +6,7 @@ Module test_palindrome - TDD for palindrome module
 
 # Note: This is the second version of test_palindrome, so called test_palindrome2.py
 
-import palindrome
+import palindrome2 as palindrome
 
 
 def test_basic():

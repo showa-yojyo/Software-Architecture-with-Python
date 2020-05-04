@@ -14,6 +14,7 @@ def is_palindrome(in_string):
     # Case insensitive
     in_string = in_string.lower()
     # Purge spaces
-    in_string = re.sub('\s+', '', in_string)
+    # 意味：文字列から正規表現にマッチする文字を削除する
+    in_string = re.sub(r'\s+', '', in_string)
     # Check if string is same as in reverse
     return in_string == in_string[-1::-1]

@@ -6,7 +6,7 @@ some helpful methods for working with date and datetime objects """
 import datetime
 
 
-class DateTimeHelper(object):
+class DateTimeHelper:
     """ A class which provides some convenient date/time
     conversion and utility methods """
 
@@ -33,5 +33,5 @@ class DateTimeHelper(object):
             yy += 2000
         # Create a date object from it
         date_obj = datetime.date(year=yy, month=int(mm), day=int(dd))
-        # Retur it in correct format
+        # Return it in correct format
         return date_obj.strftime("%d/%m/%Y")

@@ -1,8 +1,8 @@
 # Code Listing #2
+# logging のレベルがどういう意味なのかわかる。
 import logging
 
-
-class FakeLogger(object):
+class FakeLogger:
     """ A class that fakes the interface of the
     logging.Logger object in a minimalistic fashion """
 

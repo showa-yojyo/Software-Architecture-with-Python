@@ -15,11 +15,9 @@ def is_palindrome(in_string):
     # Case insensitive
     in_string = in_string.lower()
     # Purge spaces
-    in_string = re.sub('\s+', '', in_string)
+    in_string = re.sub(r'\s+', '', in_string)
     # Purge all punctuations
+    # re.escape と string.punctuation をうまく利用している
     in_string = re.sub('[' + re.escape(punctuation) + ']+', '', in_string)
     # Check if string is same as in reverse
     return in_string == in_string[-1::-1]
-
-
-rm

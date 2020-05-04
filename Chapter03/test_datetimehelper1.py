@@ -1,6 +1,7 @@
-# Code Listing - #4
+#!/usr/bin/env python
+# Code Listing - #4 テストケースの書き方
 
-""" Module testdatetimehelper -  Unit test module for testing datetimehelper module """
+""" Module testdatetimehelper - Unit test module for testing datetimehelper module """
 
 # Note - This is the first version of test_datetimehelper module so named as test_datetimehelper1.py
 
