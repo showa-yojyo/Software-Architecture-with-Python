@@ -13,8 +13,6 @@ import requests
 # Uncomment for profiling with line profiler or memory profiler
 
 # @profile
-
-
 def hound():
     f = BloomFilter(capacity=100000, error_rate=0.01)
     text = requests.get('https://www.gutenberg.org/files/2852/2852-0.txt').text

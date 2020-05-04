@@ -54,7 +54,7 @@ def sub_string(seq1, seq2):
     for item in seq2:
         if item in sequences:
             subs.append(item)
-    print(('Memory usage', asizeof.asized(sequences).format()))
+    print('Memory usage', asizeof.asized(sequences).format())
 
     return subs
 

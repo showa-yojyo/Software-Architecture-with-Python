@@ -16,14 +16,15 @@ word = "Python"
 # Implementations with simple dictionary
 for word in text.split():
     word = word.lower().strip()
+    # 次の更新処理はいかにもダメだ。
     try:
         counts[word] += 1
     except KeyError:
         counts[word] = 1
 
-print("Counts of word", word, '=>', counts[word])
+print(f"Counts of word {word} => counts[word]")
 
-cities = ['Jakarta', 'Delhi', 'Newyork',
+cities = ['Jakarta', 'Delphi', 'Newyork',
           'Bonn', 'Kolkata', 'Bangalore', 'Seoul']
 cities_len = {}
 for city in cities:
@@ -33,7 +34,7 @@ for city in cities:
         cities_len[clen] = []
     cities_len[clen].append(city)
 
-print('Cities grouped by length=>', cities_len)
+print(f'Cities grouped by length=>{cities_len}')
 
 # Implementation using default dict
 # 1. Counts
@@ -41,18 +42,19 @@ counts = defaultdict(int)
 for word in text.split():
     word = word.lower().strip()
     # Value is set to 0 and incremented by 1 in one go
+    # 上のコメントにつきる
     counts[word] += 1
 
-print("Counts of word", word, '=>', counts[word])
+print(f"Counts of word {word} => {counts[word]}")
 
 # 2. Cities grouped by length
 cities = ['Jakarta', 'Delhi', 'Newyork',
           'Bonn', 'Kolkata', 'Bangalore', 'Seoul']
+# 今度は list でよい。
 cities_len = defaultdict(list)
 
 for city in cities:
     # Empty list is created as value and appended to in one go
     cities_len[len(city)].append(city)
 
-
-print('Cities grouped by length=>', cities_len)
+print(f'Cities grouped by length=>{cities_len}')

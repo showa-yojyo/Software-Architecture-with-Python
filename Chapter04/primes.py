@@ -1,4 +1,5 @@
 # Code Listing #3
+# いわゆる iterprimes
 """
 
 Prime number iterator class
@@ -6,7 +7,7 @@ Prime number iterator class
 """
 
 
-class Prime(object):
+class Prime:
     """ A prime number iterator for first 'n' primes """
 
     def __init__(self, n):
@@ -23,6 +24,8 @@ class Prime(object):
         if self.count == self.n:
             raise StopIteration("end of iteration")
         return self.compute()
+
+    # Python では __iter__() と __next__() を実装したクラスを iterator という。
 
     # Uncomment next line for profiling with line profiler
     # or memory profiler.

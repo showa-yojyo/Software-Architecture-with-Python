@@ -1,40 +1,36 @@
+#!/usr/bin/env python
 # Code Listing #1
 """
 
 Testing search of common items across two sequences
 
+bash$ common_items.py 5000
+('Time spent=>', 468.75, 'ms.')
+('Time spent=>', 15.625, 'ms.')
 """
 
 import random
 
 from time import process_time as timer_func, sleep
 from contextlib import contextmanager
-#
 
-a1, a2 = [], []
+# NOTE: 未使用コードを削除
 
-
-def setup(n):
-    """ Setup data for test function """
-
-    global a1, a2
-    a1 = random.sample(list(range(0, 2*n)), n)
-    a2 = random.sample(list(range(0, 2*n)), n)
-
-
+# この contextmanager を使った処理時間計測関数の書き方は必修
 @contextmanager
 def timer():
     """ A simple timing function for routines """
 
     try:
         start = timer_func()
+        # この yield が急所
         yield
     except Exception as e:
         print(e)
         raise
     finally:
         end = timer_func()
-        print(('Time spent=>', 1000.0*(end - start), 'ms.'))
+        print('Time spent=>{:>10.3f}ms.'.format(1000.0*(end - start)))
 
 
 def common_items_v1(seq1, seq2):
@@ -55,18 +51,20 @@ def common_items_v2(seq1, seq2):
     seq_dict1 = {item: 1 for item in seq1}
     for item in seq2:
         try:
+            # collections.Counter を使うのが良さそうだ
             seq_dict1[item] += 1
         except KeyError:
             pass
 
-    return [item[0] for item in list(seq_dict1.items()) if item[1] > 1]
+    return [item[0] for item in seq_dict1.items() if item[1] > 1]
 
 
 def test(n, func):
     """ Generate test data and perform test on a given function """
 
-    a1 = random.sample(list(range(0, 2*n)), n)
-    a2 = random.sample(list(range(0, 2*n)), n)
+    stop = 2 * n
+    a1 = random.sample(range(0, stop), n)
+    a2 = random.sample(range(0, stop), n)
 
     with timer() as t:
         result = func(a1, a2)
@@ -82,5 +80,6 @@ def test_():
 
 if __name__ == "__main__":
     import sys
-    test(int(sys.argv[1]), common_items_v1)
-    test(int(sys.argv[1]), common_items_v2)
+    n = int(sys.argv[1])
+    test(n, common_items_v1)
+    test(n, common_items_v2)

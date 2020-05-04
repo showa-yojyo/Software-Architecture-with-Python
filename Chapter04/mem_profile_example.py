@@ -5,7 +5,7 @@ Memory profiler example
 
 """
 
-
+# TODO: この profile はどこから持ってくるのか？
 @profile
 def squares(n):
     return [x*x for x in range(1, n+1)]

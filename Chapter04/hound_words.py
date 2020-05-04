@@ -19,9 +19,11 @@ for word in text.split():
         continue
     freq[word.lower()] += 1
 
-print(sorted(list(freq.items()),
+print(sorted(freq.items(),
              key=operator.itemgetter(1), reverse=True)[:10])
 
 print('Using Counter')
+# この入れ子の内包表記は覚えにくい
 freq = Counter([_f for _f in [x.lower().strip() for x in text.split()] if _f])
+# Counter.most_common() が急所
 print(freq.most_common(10))

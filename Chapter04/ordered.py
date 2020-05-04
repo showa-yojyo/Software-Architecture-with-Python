@@ -6,9 +6,12 @@ Examples of using OrderedDict
 
 """
 
+# OrderedDict に関する実演だが、今の Python 3.8 では微妙な存在なので読まなくていい。
+# 事実、以下を実行すると同じ結果（並び）になっている。
+
 from collections import OrderedDict
 
-cities = ['Jakarta', 'Delhi', 'Newyork',
+cities = ['Jakarta', 'Delphi', 'Newyork',
           'Bonn', 'Kolkata', 'Bangalore', 'Seoul']
 # Dictionary
 cities_dict = dict.fromkeys(cities)
@@ -57,11 +60,11 @@ if __name__ == "__main__":
     # Bangalore is set again - moves to right
     d.set('bangalore')
     d.set('kolkata')
-    d.set('delhi')
+    d.set('delphi')
     # Chennai is set again - so moves to right
     d.set('chennai')
 
-    print(('Length=>', len(d)))
+    print('Length=>', len(d))
     print(d)
     # Kochi is appended and mumbai drops off
     d.set('kochi')
