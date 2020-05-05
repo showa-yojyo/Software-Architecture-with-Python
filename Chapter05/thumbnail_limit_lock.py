@@ -15,7 +15,7 @@ import urllib.request
 from PIL import Image
 from queue import Queue
 
-
+# このクラスは変更なし
 class ThumbnailURL_Generator(threading.Thread):
     """ Worker class that generates image URLs """
 
@@ -28,7 +28,7 @@ class ThumbnailURL_Generator(threading.Thread):
         self._sizes = (240, 320, 360, 480, 600, 720)
         # URL scheme
         self.url_template = 'https://dummyimage.com/%s/%s/%s.jpg'
-        threading.Thread.__init__(self)
+        super().__init__()
 
     def __str__(self):
         return 'Producer'
@@ -58,8 +58,10 @@ class ThumbnailURL_Generator(threading.Thread):
 
         self.flag = False
 
-
-class ThumbnailImageSaver(object):
+# Lock を利用するクラス
+# 例えば 500 個を上限としているときにファイル保存の回数が 500 を超えないように
+# するにはロックの仕組みなどを用いるのが自然だ。
+class ThumbnailImageSaver:
     """ Class which saves URLs to thumbnail images and keeps a counter """
 
     def __init__(self, limit=10):
@@ -78,13 +80,15 @@ class ThumbnailImageSaver(object):
         im.thumbnail(size, Image.ANTIALIAS)
         im.save(filename)
         print('Saved', filename)
-        self.counter[filename] = 1
+        self.counter[filename] = 1 # 一見妙だが？
         return True
 
+    # ディスクへの保存をロックする
     def save(self, url):
         """ Save a URL as thumbnail """
 
         with self.lock:
+            # ロックしてから変数を参照するのが急所
             if len(self.counter) >= self.limit:
                 return False
             self.thumbnail_image(url)
@@ -98,11 +102,13 @@ class ThumbnailURL_Consumer(threading.Thread):
     def __init__(self, queue, saver):
         self.queue = queue
         self.flag = True
+        # Saver を組み込む
         self.saver = saver
         self.count = 0
         # Internal id
+        # uuid.uuid4() の応用例
         self._id = uuid.uuid4().hex
-        threading.Thread.__init__(self, name='Consumer-' + self._id)
+        super().__init__(name='Consumer-' + self._id)
 
     def __str__(self):
         return 'Consumer-' + self._id
@@ -114,10 +120,11 @@ class ThumbnailURL_Consumer(threading.Thread):
             url = self.queue.get()
             print(self, 'Got', url)
             self.count += 1
+            # Saver の保存メソッドに差し替える
             if not self.saver.save(url):
                 # Limit reached, break out
                 print(self, 'Set limit reached, quitting')
-                break
+                break # 今度は自分から止まる
 
     def stop(self):
         """ Stop the thread """
@@ -128,9 +135,10 @@ class ThumbnailURL_Consumer(threading.Thread):
 if __name__ == '__main__':
     from queue import Queue
     import glob
-    import os
+    #import os
 
-    os.system('rm -f *.png')
+    # コメントアウトしておく
+    #os.system('rm -f *.png')
     q = Queue(maxsize=2000)
     saver = ThumbnailImageSaver(limit=50)
 
@@ -140,21 +148,27 @@ if __name__ == '__main__':
         producers.append(t)
         t.start()
 
+    # Saver を Consumer 全部に渡す
     for i in range(5):
         t = ThumbnailURL_Consumer(q, saver)
         consumers.append(t)
         t.start()
 
+    # Consumer 側を全部 join() する
+    # スレッドが終了するまで待機（ブロック）する。
     for t in consumers:
         t.join()
         print('Joined', t, flush=True)
 
     # To make sure producers dont block on a full queue
+    # キューを手動で空にする？
     while not q.empty():
         item = q.get()
 
+    # それから Generator 側すべてに対してフラグをリセットする
     for t in producers:
         t.stop()
         print('Stopped', t, flush=True)
 
+    # サムネイルの個数をファイルシステムから得る
     print('Total number of PNG images', len(glob.glob('*.png')))

@@ -53,8 +53,8 @@ def scheduler(tasks, runs=10000):
         for t in tasks:
             print('Switching to task', t.__name__)
             try:
-                result = t.__next__()
-                print('Result=>', result)
+                result = next(t)
+                print(f'{result=}')
                 results[t.__name__].append(result)
             except StopIteration:
                 break
@@ -62,17 +62,25 @@ def scheduler(tasks, runs=10000):
     return results
 
 
+from contextlib import contextmanager
+
+@contextmanager
+def timer():
+    start = time.time()
+    try:
+        yield
+    finally:
+        end = time.time()
+        print('Time taken=>', end - start)
+
 if __name__ == "__main__":
     import sys
     tasks = []
-    start = time.clock()
-
     limit = int(sys.argv[1])
 
-    tasks.append(square_mapper(number_generator(limit)))
-    tasks.append(prime_filter(number_generator(limit)))
+    with timer():
+        tasks.append(square_mapper(number_generator(limit)))
+        tasks.append(prime_filter(number_generator(limit)))
 
-    results = scheduler(tasks, runs=limit)
-    print('Last prime=>', results['prime_filter'][-1])
-    end = time.clock()
-    print('Time taken=>', end-start)
+        results = scheduler(tasks, runs=limit)
+        print('Last prime=>', results['prime_filter'][-1])

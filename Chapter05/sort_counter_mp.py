@@ -1,4 +1,5 @@
 # Code Listing #10
+# これは意味がわからない。
 
 """
 
@@ -21,8 +22,10 @@ def sorter(filenames):
     counter = collections.defaultdict(int)
 
     for filename in filenames:
-        for i in open(filename):
-            counter[i] += 1
+        with open(filename) as f:
+            # やはり文字列をキーとする
+            for i in f:
+                counter[i] += 1
 
     return counter
 
@@ -35,11 +38,8 @@ def batch_files(pool_size, limit):
     filenames = []
 
     for i in range(pool_size):
-        batch = []
-        for j in range(i*batch_size, (i+1)*batch_size):
-            filename = 'numbers/numbers_%d.txt' % j
-            batch.append(filename)
-
+        batch = ['numbers/numbers_%d.txt' %
+                 j for j in range(i*batch_size, (i+1)*batch_size)]
         filenames.append(batch)
 
     return filenames
@@ -53,9 +53,10 @@ def sort_files(pool_size, filenames):
 
         with open('sorted_nums.txt', 'w') as fp:
             for i in range(1, MAXINT+1):
-                count = sum([x.get(str(i)+'\n', 0) for x in counters])
+                text = str(i)+'\n'
+                count = sum(x.get(text, 0) for x in counters)
                 if count > 0:
-                    fp.write((str(i)+'\n')*count)
+                    fp.write(text*count)
 
         print('Sorted')
 

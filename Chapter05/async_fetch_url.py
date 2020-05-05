@@ -12,32 +12,32 @@ import aiohttp
 import async_timeout
 
 
-@asyncio.coroutine
-def fetch_page(session, url, timeout=60):
+async def fetch_page(session, url, timeout=60):
     """ Asynchronous URL fetcher """
 
     with async_timeout.timeout(timeout):
-        response = session.get(url)
-        return response
+        async with session.get(url) as response:
+            return response
 
 
-loop = asyncio.get_event_loop()
 urls = ('http://www.google.com',
         'http://www.yahoo.com',
         'http://www.facebook.com',
         'http://www.reddit.com',
         'http://www.twitter.com')
 
+# TODO: 修正方法がわからない
 
-session = aiohttp.ClientSession(loop=loop)
-tasks = [fetch_page(session, x) for x in urls]
-# Wait for tasks
-done, pending = loop.run_until_complete(asyncio.wait(tasks, timeout=120))
+async def main():
+    async with aiohttp.ClientSession() as session:
+        tasks = [asyncio.create_task(fetch_page(session, x)) for x in urls]
 
-for future in done:
-    response = future.result()
-    print(response)
-    response.close()
+        # Wait for tasks
+        done, pending = await asyncio.wait(tasks, timeout=120)
 
-session.close()
-loop.close()
+        for future in done:
+            response = future.result()
+            print(response)
+            response.close()
+
+asyncio.run(main())

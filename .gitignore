@@ -50,3 +50,8 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# output files
+Chapter05/sorted_nums.txt
+Chapter05/mandelbrot.png
+Chapter05/thumbs/*_thumb.png

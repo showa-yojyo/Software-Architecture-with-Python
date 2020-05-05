@@ -16,7 +16,7 @@ import urllib.request
 from PIL import Image
 from queue import Queue
 
-
+# 新クラス
 class ThumbnailURLController(threading.Thread):
     """ A rate limiting controller thread for URLs using conditions """
 
@@ -28,8 +28,10 @@ class ThumbnailURLController(threading.Thread):
         self.count = 0
         self.start_t = time.time()
         self.flag = True
+        # 新要素
+        # 条件変数という概念で、中にロックを持つ。
         self.cond = threading.Condition()
-        threading.Thread.__init__(self)
+        super().__init__()
 
     def increment(self):
         # Increment count of URLs
@@ -46,6 +48,7 @@ class ThumbnailURLController(threading.Thread):
             if rate < self.rate_limit:
                 with self.cond:
                     print('Notifying all...')
+                    # cond.wait() しているスレッドを全て再開させる
                     self.cond.notify_all()
 
         print('Controller quitting')
@@ -61,17 +64,21 @@ class ThumbnailURLController(threading.Thread):
         rate = self.calc_rate()
         print('Current Rate', rate)
         # If rate > limit, add more sleep time to thread
+        # スリープ微調整用の数値を決める
         diff = abs(rate - self.rate_limit)
         sleep_diff = diff/(self.nthreads*60.0)
 
         if rate > self.rate_limit:
+            # 生産を絞る場合
+
             # Adjust threads sleep_time
             thread.sleep_time += sleep_diff
             # Hold this thread till rate settles down with a 5% error
             with self.cond:
                 print('Controller, rate is high, sleep more by', rate, sleep_diff)
                 while self.calc_rate() > self.rate_limit:
-                    self.cond.wait()
+                    # notify() されるまで待機する
+                    self.cond.wait() # ブロック
         elif rate < self.rate_limit:
             print('Controller, rate is low, sleep less by', rate, sleep_diff)
             # Decrease sleep time
@@ -81,7 +88,7 @@ class ThumbnailURLController(threading.Thread):
             thread.sleep_time = max(0, sleep_time)
             # Dont hold the thread
 
-
+# Generator に Controller (thread + Condition) を組み込む
 class ThumbnailURL_Generator(threading.Thread):
     """ Worker class that generates image URLs and supports throttling via
     an external controller """
@@ -99,7 +106,7 @@ class ThumbnailURL_Generator(threading.Thread):
         self.controller = controller
         # Internal id
         self._id = uuid.uuid4().hex
-        threading.Thread.__init__(self, name='Producer-' + self._id)
+        super().__init__(name='Producer-' + self._id)
 
     def __str__(self):
         return 'Producer-'+self._id
@@ -122,8 +129,10 @@ class ThumbnailURL_Generator(threading.Thread):
             # Add to queue
             print(self, 'Put', url)
             self.queue.put(url)
+            # キューに一つ入れるたびに controller のカウンターを増す
             self.controller.increment()
             # Throttle after putting a few images
+            # 超過時にレートを絞る
             if self.controller.count > 5:
                 self.controller.throttle(self)
 
@@ -135,40 +144,8 @@ class ThumbnailURL_Generator(threading.Thread):
         self.flag = False
 
 
-class ThumbnailImageSaver(object):
-    """ Class which saves URLs to thumbnail images and keeps a counter """
-
-    def __init__(self, limit=10):
-        self.limit = limit
-        self.lock = threading.Lock()
-        self.counter = {}
-
-    def thumbnail_image(self, url, size=(64, 64), format='.png'):
-        """ Save image thumbnails, given a URL """
-
-        im = Image.open(urllib.request.urlopen(url))
-        # filename is last two parts of URL minus extension + '.format'
-        pieces = url.split('/')
-        filename = ''.join(
-            (pieces[-2], '_', pieces[-1].split('.')[0], '_thumb', format))
-        im.thumbnail(size, Image.ANTIALIAS)
-        im.save(filename)
-        print('Saved', filename)
-        self.counter[filename] = 1
-        return True
-
-    def save(self, url):
-        """ Save a URL as thumbnail """
-
-        with self.lock:
-            if len(self.counter) >= self.limit:
-                return False
-            self.thumbnail_image(url)
-            print('Count=>', len(self.counter))
-            return True
-
-
-class ThumbnailImageSemaSaver(object):
+# BoundedSemaphore 版 Saver は変更点なし
+class ThumbnailImageSemaSaver:
     """ Class which keeps an exact counter of saved images
     and restricts the total count using a semaphore """
 
@@ -219,7 +196,7 @@ class ThumbnailImageSemaSaver(object):
             print('Semaphore limit reached, returning False')
             return False
 
-
+# Consumer は変更点なし
 class ThumbnailURL_Consumer(threading.Thread):
     """ Worker class that consumes URLs and generates thumbnails """
 
@@ -230,7 +207,7 @@ class ThumbnailURL_Consumer(threading.Thread):
         self.count = 0
         # Internal id
         self._id = uuid.uuid4().hex
-        threading.Thread.__init__(self, name='Consumer-' + self._id)
+        super().__init__(name='Consumer-' + self._id)
 
     def __str__(self):
         return 'Consumer-' + self._id
@@ -256,13 +233,16 @@ class ThumbnailURL_Consumer(threading.Thread):
 if __name__ == '__main__':
     from queue import Queue
     import glob
-    import os
+    #import os
 
-    os.system('rm -f *.png')
+    #os.system('rm -f *.png')
     q = Queue(maxsize=2000)
+    # Controller は Generator すべてに共有させる
     controller = ThumbnailURLController(rate_limit=25, nthreads=3)
+    # Semaphore 版を用いるが Lock 版を用いてもプログラムは機能する
     saver = ThumbnailImageSemaSaver(limit=100)
 
+    # Controller が最初に開始する
     controller.start()
 
     producers, consumers = [], []
@@ -284,6 +264,7 @@ if __name__ == '__main__':
     while not q.empty():
         item = q.get()
 
+    # Generator を停止する前に Controller を停止する
     print('Stopping controller')
     controller.stop()
 

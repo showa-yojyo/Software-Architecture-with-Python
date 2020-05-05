@@ -16,7 +16,7 @@ import urllib.request
 from PIL import Image
 from queue import Queue
 
-
+# Generator は無限生成版、ロック版と同じ定義
 class ThumbnailURL_Generator(threading.Thread):
     """ Worker class that generates image URLs """
 
@@ -29,7 +29,7 @@ class ThumbnailURL_Generator(threading.Thread):
         self._sizes = (240, 320, 360, 480, 600, 720)
         # URL scheme
         self.url_template = 'https://dummyimage.com/%s/%s/%s.jpg'
-        threading.Thread.__init__(self)
+        super().__init__()
 
     def __str__(self):
         return 'Producer'
@@ -59,13 +59,14 @@ class ThumbnailURL_Generator(threading.Thread):
 
         self.flag = False
 
-
-class ThumbnailImageSemaSaver(object):
+# Saver は Lock を Semaphore に変更する
+class ThumbnailImageSemaSaver:
     """ Class which keeps an exact counter of saved images
     and restricts the total count using a semaphore """
 
     def __init__(self, limit=10):
         self.limit = limit
+        # BoundedSemaphore は初見だ
         self.counter = threading.BoundedSemaphore(value=limit)
         self.count = 0
         # Start time
@@ -89,6 +90,8 @@ class ThumbnailImageSemaSaver(object):
         # filename is last two parts of URL minus extension + '.format'
         pieces = url.split('/')
         filename = ''.join((pieces[-2], '_', pieces[-1].split('.')[0], format))
+
+        # 急所の例外処理
         try:
             im.thumbnail(size, Image.ANTIALIAS)
             im.save(filename)
@@ -104,14 +107,16 @@ class ThumbnailImageSemaSaver(object):
     def save(self, url):
         """ Save a URL as thumbnail """
 
-        if self.acquire():
+        # セマフォの許しが出てから保存を呼び出すものとする
+        # 残念なことに with 文のほうがみてくれが良かった
+        if self.acquire(): # blocking=False
             self.thumbnail_image(url)
             return True
         else:
             print('Semaphore limit reached, returning False')
             return False
 
-
+# Consumer は変更なし
 class ThumbnailURL_Consumer(threading.Thread):
     """ Worker class that consumes URLs and generates thumbnails """
 
@@ -122,7 +127,7 @@ class ThumbnailURL_Consumer(threading.Thread):
         self.count = 0
         # Internal id
         self._id = uuid.uuid4().hex
-        threading.Thread.__init__(self, name='Consumer-' + self._id)
+        super().__init__(name='Consumer-' + self._id)
 
     def __str__(self):
         return 'Consumer-' + self._id
@@ -144,13 +149,13 @@ class ThumbnailURL_Consumer(threading.Thread):
 
         self.flag = False
 
-
+# メイン処理は変更なし
 if __name__ == '__main__':
     from queue import Queue
     import glob
-    import os
+    #import os
 
-    os.system('rm -f *.png')
+    #os.system('rm -f *.png')
     q = Queue(maxsize=2000)
     saver = ThumbnailImageSemaSaver(limit=100)
 

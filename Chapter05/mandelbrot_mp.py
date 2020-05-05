@@ -9,7 +9,7 @@ Mandelbrot fractal generator - concurrent version using PyMP (using shared memor
 # mandelbrot_mp.py
 import sys
 from PIL import Image
-import pymp
+import pymp # pip install pymp-pypi
 import argparse
 
 
@@ -36,8 +36,10 @@ def mandelbrot_calc_set(w, h, max_iteration=10000, output='mandelbrot_mp.png'):
     maximum number of iterations """
 
     image = Image.new("RGB", (w, h))
+    # 特殊な記憶空間
     image_rows = pymp.shared.dict()
 
+    # さらに平行化
     with pymp.Parallel(4) as p:
         for y in p.range(0, h):
             mandelbrot_calc_row(y, w, h, image_rows, max_iteration)
@@ -64,5 +66,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     print('Creating mandelbrot set with size %(width)sx%(height)s, #iterations=%(niter)s' % args.__dict__)
+    #pymp.freeze_support() # 動かない
     mandelbrot_calc_set(args.width, args.height,
                         max_iteration=args.niter, output=args.output)

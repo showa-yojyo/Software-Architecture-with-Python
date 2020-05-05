@@ -8,7 +8,7 @@ Example of co-operative multitasking using asyncio
 
 import asyncio
 
-
+# ジェネレーター
 def number_generator(m, n):
     """ A number generator co-routine in range(m...n+1) """
     yield from range(m, n+1)
@@ -36,7 +36,7 @@ async def prime_filter(m, n):
         # so that another co-routine can be scheduled.
         await asyncio.sleep(1.0)
 
-    return tuple(primes)
+    return primes
 
 
 async def square_mapper(m, n):
@@ -59,10 +59,9 @@ def print_result(future):
     print('Result=>', future.result())
 
 
-loop = asyncio.get_event_loop()
-future = asyncio.gather(prime_filter(10, 50), square_mapper(10, 50))
-future.add_done_callback(print_result)
-loop.run_until_complete(future)
+async def main():
+    future = asyncio.gather(prime_filter(10, 50), square_mapper(10, 50))
+    future.add_done_callback(print_result)
+    await future
 
-loop.close()
-
+asyncio.run(main())

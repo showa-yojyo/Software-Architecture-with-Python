@@ -11,7 +11,7 @@ $ time python3 prime_process.py > /dev/null
 
 
 import multiprocessing
-from queue import Queue, Empty
+#from queue import Queue, Empty
 
 
 def is_prime(n):
@@ -32,5 +32,6 @@ if __name__ == "__main__":
                982451653, 112272535095293,
                115280095190773, 1099726899285419]*100
 
-    pool = multiprocessing.Pool(4)
-    pool.map(is_prime, numbers)
+    # with 文を用いることにする
+    with multiprocessing.Pool(4) as pool:
+        pool.map(is_prime, numbers)

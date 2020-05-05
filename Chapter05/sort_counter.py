@@ -1,5 +1,5 @@
 # Code Listing #9
-
+# これは意味がわからない。
 """
 
 Sort a number of disk files using a counter - a dictionary that keeps counts of numbers.
@@ -20,16 +20,18 @@ def sort():
 
     for i in range(int(sys.argv[1])):
         filename = 'numbers/numbers_%d.txt' % i
-        for n in open(filename):
-            counter[n] += 1
+        with open(filename) as f:
+            for n in f:
+                counter[n] += 1
 
     print('Sorting...')
 
     with open('sorted_nums.txt', 'w') as fp:
         for i in range(1, MAXINT+1):
-            count = counter.get(str(i) + '\n', 0)
-            if count > 0:
-                fp.write((str(i)+'\n')*count)
+            # '\n' が要るのがダサい
+            text = str(i) + '\n'
+            if (count := counter.get(text, 0)) > 0:
+                fp.write(text * count)
 
     print('Sorted')
 

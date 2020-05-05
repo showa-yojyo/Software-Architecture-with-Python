@@ -28,4 +28,6 @@ if __name__ == "__main__":
                982451653, 112272535095293,
                115280095190773, 1099726899285419]*100
 
+    # この書き方しかしないかもしれない。
+    # delayed() は面白い
     Parallel(n_jobs=10)(delayed(is_prime)(i) for i in numbers)
