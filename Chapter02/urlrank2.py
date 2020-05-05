@@ -27,7 +27,7 @@ class UrlRank:
 
         for url in self.urls:
             data = requests.get(url).content
-            words = map(lambda x: x.lower().strip(), data.split())
+            words = [x.lower().strip() for x in data.split()]
             # Filter empty words
             count = words.count(self.word)
             occurs.append((url, count))
@@ -49,7 +49,7 @@ class UrlRank(RankBase):
         (url, #occur) in decreasing order of
         occurences """
 
-        texts = map(lambda x: requests.get(x).content, self.urls)
+        texts = [requests.get(x).content for x in self.urls]
         occurs = super(UrlRank, self).rank(*texts)
         # Convert to URLs list
         occurs = [(self.urls[x], y) for x, y in occurs.items()]

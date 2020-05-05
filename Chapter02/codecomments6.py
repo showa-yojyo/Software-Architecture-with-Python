@@ -7,5 +7,4 @@ def rms(varray=[]):
     """ Root mean squared velocity. Returns
     square root of sum of squares of velocities """
 
-    squares = map(lambda x: x*x, varray)
-    return pow(sum(squares), 0.5)
+    return pow(sum(x**2 for x in varray), 0.5)

@@ -8,7 +8,7 @@ def fetch_url(url, ntries=3, timeout=30):
         url - The URL to be fetched.
         ntries - The maximum number of retries.
         timeout - Timout per call in seconds.
-     @returns
+    @returns
         On success - Contents of URL.
         On failure - (error_code, last_error)
     """

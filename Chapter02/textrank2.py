@@ -24,8 +24,9 @@ class TextRank:
         occurs = []
 
         for fpath in self.filenames:
-            data = open(fpath).read()
-            words = map(lambda x: x.lower().strip(), data.split())
+            with open(fpath) as f:
+                data = f.read()
+            words = [x.lower().strip() for x in data.split()]
             # Filter empty words
             count = words.count(self.word)
             occurs.append((fpath, count))
@@ -47,8 +48,11 @@ class TextRank(RankBase):
         (filename, #occur) in decreasing order of
         occurences """
 
-        texts = map(lambda x: open(x).read(), self.filenames)
-        occurs = super(TextRank, self).rank(*texts)
+        texts = []
+        for filename in self.filenames:
+            with open(filename) as fp:
+                texts.extend(fp.read())
+        occurs = super().rank(*texts)
         # Convert to filename list
         occurs = [(self.filenames[x], y) for x, y in occurs.items()]
 

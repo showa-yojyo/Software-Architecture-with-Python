@@ -1,30 +1,30 @@
-1.  loop1.py
-2.  loop2.py
-3.  codecomments.py
-4.  codecomments2.py
-5.  codecomments3.py
-6.  codecomments4.py
-7.  codecomments5.py
-8.  codecomments6.py
-9.  codecomments7.py
-10. a1.py
-11. b1.py
-12. a2.py
-13. a_text.py
-14. b_text.py
-15. a_text2.py
-16. b_text2.py
-17. textrank.py
-18. urlrank.py
-19. rankbase.py
-20. textrank2.py
-21. urlrank2.py
-22. power.py
-23. factorial.py
-24. metrictest1.py
-25. metrictest2.py
-26. metrictest_fix1.py
-27. metrictest_fix2.py
-28. metrictest.py
+1.  loop1.py: リストをループで回すのに range を使ってはならない
+2.  loop2.py: 添字が欲しいときには enumerate を用いること
+3.  codecomments.py: Python コードにおけるコメントの書き方だろうか
+4.  codecomments2.py: 関数の docstring の紹介か
+5.  codecomments3.py: 関数に対する docstring の書き方の例
+6.  codecomments4.py: クラスに対する docstring の書き方の例
+7.  codecomments5.py: モジュールに対する docstring の書き方の例
+8.  codecomments6.py: 趣旨不明
+9.  codecomments7.py: コメントの位置についての注意
+10. a1.py: 略
+11. b1.py: 分散その他を自分で計算するコード
+12. a2.py: 略
+13. a_text.py: 略
+14. b_text.py: 略
+15. a_text2.py: 略
+16. b_text2.py: 略
+17. textrank.py: sort() の練習
+18. urlrank.py: sort() の練習
+19. rankbase.py: sort() の練習
+20. textrank2.py: sort() の練習
+21. urlrank2.py: sort() の練習
+22. power.py: 略
+23. factorial.py: 再帰関数の説明用
+24. metrictest1.py: 不明
+25. metrictest2.py: 不明
+26. metrictest_fix1.py: 不明
+27. metrictest_fix2.py: 不明
+28. metrictest.py: 不明
 
 
