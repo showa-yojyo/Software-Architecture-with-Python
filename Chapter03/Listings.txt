@@ -1,16 +1,16 @@
-1. url_data.py
-2. fakelogger.py
-3. datetimehelper.py
-4. test_datetimehelper1.py
-5. test_datetimehelper2.py
-6. test_datetimehelper_object.py
-7. textsearcher.py
-8. test_textsearch.py
-9. factorial.py
-10. selenium_testcase.py
-11. test_palindrome1.py
-12. palindrome1.py
-13. test_palindrome2.py
-14. palindrome2.py
-15. test_palindrome3.py
-16. palindrome3.py
+1. url_data.py: hashlib.md5(url).hexdigest() が面白い
+2. fakelogger.py: logging.Logger もどきを定義する
+3. datetimehelper.py: なぜクラスでなければならないのか
+4. test_datetimehelper1.py: テストケースの書き方 基本
+5. test_datetimehelper2.py: テストケースの書き方 patch
+6. test_datetimehelper_object.py: おそらく外部パッケージによる単体テストのテスト対象
+7. textsearcher.py: データベースを必要とするクラス
+8. test_textsearch.py: テストケースの書き方 Mock, MagikMock
+9. factorial.py: docstring の書き方およびテスト方法
+10. selenium_testcase.py: Selenium プログラムのテストの書き方および pytest
+11. test_palindrome1.py: テストコード
+12. palindrome1.py: 回文判定関数 素朴版
+13. test_palindrome2.py: テストコード
+14. palindrome2.py: 回文判定関数 空白考慮版
+15. test_palindrome3.py: テストコード
+16. palindrome3.py: 回文判定関数 空白・句読点考慮版

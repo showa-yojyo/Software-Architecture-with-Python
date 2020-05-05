@@ -4,7 +4,7 @@
 
 import datetimehelper
 
-# このスーパークラス (object) は冗長なので書いてはいけないと別の文献で言っている。
+
 class TestDateTimeHelper:
 
     def test_us_india_conversion(self):
