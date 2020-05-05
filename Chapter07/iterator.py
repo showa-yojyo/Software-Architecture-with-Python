@@ -9,7 +9,7 @@ The iterator pattern - A prime number iterator
 import itertools
 
 
-class Prime(object):
+class Prime:
     """ An iterator for prime numbers """
 
     def __init__(self, initial, final=0):

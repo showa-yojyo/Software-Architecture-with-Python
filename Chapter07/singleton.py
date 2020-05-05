@@ -22,7 +22,7 @@ class MetaSingleton(type):
         return cls.instance
 
 
-class Singleton(object):
+class Singleton:
     """ Singleton in Python """
 
     _instance = None

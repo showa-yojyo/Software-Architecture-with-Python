@@ -8,7 +8,7 @@ import operator
 from rankbase import RankBase
 
 
-class TextRank(object):
+class TextRank:
     """ Accept text files as inputs and rank them in
     terms of how much a word occurs in them """
 

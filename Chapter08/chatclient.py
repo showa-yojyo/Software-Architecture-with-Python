@@ -12,7 +12,7 @@ import sys
 from communication import send, receive
 
 
-class ChatClient(object):
+class ChatClient:
     """ A simple command line chat client using select """
 
     def __init__(self, name, host='127.0.0.1', port=3490):

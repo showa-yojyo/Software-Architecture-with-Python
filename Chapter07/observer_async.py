@@ -15,7 +15,7 @@ import aiohttp
 from collections import defaultdict, deque
 
 
-class NewsPublisher(object):
+class NewsPublisher:
     """ A news publisher class with asynchronous notifications """
 
     def __init__(self):
@@ -67,7 +67,7 @@ class NewsPublisher(object):
             await asyncio.sleep(2.0)
 
 
-class NewsSubscriber(object):
+class NewsSubscriber:
     """ A news subscriber class with asynchronous callbacks """
 
     def __init__(self):

@@ -5,7 +5,7 @@
 import operator
 
 
-class RankBase(object):
+class RankBase:
     """ Accept text data as inputs and rank them in
     terms of how much a word occurs in them """
 

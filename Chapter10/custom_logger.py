@@ -25,7 +25,7 @@ def create_logger(app_name, logfilename=None, level=logging.INFO,
 
     if syslog:
         log.addHandler(logging.handlers.SysLogHandler(address='/dev/log'))
-        
+
     if console:
         log.addHandler(logging.StreamHandler())
 
@@ -34,10 +34,10 @@ def create_logger(app_name, logfilename=None, level=logging.INFO,
         formatter = logging.Formatter('%(asctime)s : %(levelname)-8s - %(message)s',
                                       datefmt='%Y-%m-%d %H:%M:%S')
         handle.setFormatter(formatter)
-        
+
     return log
 
-class LoggerWrapper(object):
+class LoggerWrapper:
     """ A wrapper class for logger objects with
     calculation of time spent in each step """
 
@@ -55,7 +55,7 @@ class LoggerWrapper(object):
         # Set formatting
         for handle in self.log.handlers:
             formatter = logging.Formatter('%(asctime)s [%(timespent)s]: %(levelname)-8s - %(message)s',
-                                          datefmt='%Y-%m-%d %H:%M:%S')        
+                                          datefmt='%Y-%m-%d %H:%M:%S')
             handle.setFormatter(formatter)
 
 
@@ -67,7 +67,7 @@ class LoggerWrapper(object):
 
         # Mark timestamp
         self._markt = time.time()
-        
+
     def _calc_time(self):
         """ Calculate time spent so far """
 
@@ -84,10 +84,10 @@ class LoggerWrapper(object):
         """ Generic method for logging at different levels """
 
         logfunc = getattr(self.log, levelname)
-        return logfunc(msg, *args, extra={'timespent': self._calc_time()})         
+        return logfunc(msg, *args, extra={'timespent': self._calc_time()})
 
 if __name__ == "__main__":
-    
+
     log=LoggerWrapper('myapp', filename='myapp.log',console=True)
     log.info("Starting application...")
     log.info("Initializing objects.")

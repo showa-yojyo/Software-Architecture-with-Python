@@ -49,7 +49,7 @@ class Accountant(Employee):
         return "accounting"
 
 
-class EmployeeProxy(object):
+class EmployeeProxy:
     """ Counting proxy class for Employees """
 
     # Count of employees
@@ -94,7 +94,7 @@ class EmployeeProxy(object):
         self.decr_count()
 
 
-class EmployeeProxyFactory(object):
+class EmployeeProxyFactory:
     """ An Employee factory class returning proxy objects """
 
     @classmethod

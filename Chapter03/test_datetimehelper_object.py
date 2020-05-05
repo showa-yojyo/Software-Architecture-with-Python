@@ -5,7 +5,7 @@
 import datetimehelper
 
 # このスーパークラス (object) は冗長なので書いてはいけないと別の文献で言っている。
-class TestDateTimeHelper(object):
+class TestDateTimeHelper:
 
     def test_us_india_conversion(self):
         """ Test us=>india date format conversion """

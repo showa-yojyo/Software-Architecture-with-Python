@@ -9,7 +9,7 @@ Adapter design pattern - Class Adapter
 import itertools
 
 
-class Polygon(object):
+class Polygon:
     """ A polygon class """
 
     def __init__(self, *sides):

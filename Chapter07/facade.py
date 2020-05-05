@@ -9,7 +9,7 @@ Facade design pattern using a Car as example
 import time
 
 
-class Engine(object):
+class Engine:
     """ An Engine class """
 
     def __init__(self, name, bhp, rpm, volume, cylinders=4, type='petrol'):
@@ -29,7 +29,7 @@ class Engine(object):
         print('Engine stopped')
 
 
-class Transmission(object):
+class Transmission:
     """ Transmission class """
 
     def __init__(self, gears, torque):
@@ -69,7 +69,7 @@ class Transmission(object):
         print('Shifted to gear', self.gear_pos)
 
 
-class Brake(object):
+class Brake:
     """ A brake class """
 
     def __init__(self, number, type='disc'):
@@ -93,10 +93,10 @@ class ParkingBrake(Brake):
     """ A parking brake class """
 
     def __init__(self, type='drum'):
-        super(ParkingBrake, self).__init__(type=type, number=1)
+        super().__init__(type=type, number=1)
 
 
-class Suspension(object):
+class Suspension:
     """ A suspension class """
 
     def __init__(self, load, type='mcpherson'):
@@ -104,7 +104,7 @@ class Suspension(object):
         self.load = load
 
 
-class Wheel(object):
+class Wheel:
     """ A wheel class """
 
     def __init__(self, material, diameter, pitch):
@@ -113,7 +113,7 @@ class Wheel(object):
         self.pitch = pitch
 
 
-class WheelAssembly(object):
+class WheelAssembly:
     """ A wheel assembly class """
 
     def __init__(self, brake, suspension):
@@ -128,7 +128,7 @@ class WheelAssembly(object):
         self.brake.engage()
 
 
-class Frame(object):
+class Frame:
     """ A frame class for an automobile """
 
     def __init__(self, length, width):
@@ -136,7 +136,7 @@ class Frame(object):
         self.width = width
 
 
-class Car(object):
+class Car:
     """ A car class - Facade pattern """
 
     def __init__(self, model, manufacturer):

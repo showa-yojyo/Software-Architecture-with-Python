@@ -8,7 +8,7 @@ of Singletons
 """
 
 
-class Borg(object):
+class Borg:
     """ I ain't a Singleton """
     __shared_state = {}
 
@@ -20,7 +20,7 @@ class IBorg(Borg):
     """ I am a Borg """
 
     def __init__(self):
-        Borg.__init__(self)
+        super().__init__()
         self.state = 'init'
 
     def __str__(self):

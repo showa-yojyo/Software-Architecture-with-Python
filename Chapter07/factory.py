@@ -49,7 +49,7 @@ class Admin(Employee):
         return "administration"
 
 
-class EmployeeFactory(object):
+class EmployeeFactory:
     """ An Employee factory class """
 
     @classmethod

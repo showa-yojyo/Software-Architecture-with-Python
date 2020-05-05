@@ -7,7 +7,7 @@ Code testing the 'len' function for overflow errors
 """
 
 
-class A(object):
+class A:
     def __len__(self):
         return 100 ** 100
 

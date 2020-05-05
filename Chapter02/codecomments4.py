@@ -1,7 +1,7 @@
 # Code listing #6
 
 
-class UrlFetcher(object):
+class UrlFetcher:
     """ Implements the steps of fetching a URL.
 
     Main methods:

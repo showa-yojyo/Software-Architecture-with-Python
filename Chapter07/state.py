@@ -11,7 +11,7 @@ import random
 import itertools
 
 
-class ComputerState(object):
+class ComputerState:
     """ Base class for state of a computer """
 
     # This is an iterator
@@ -98,7 +98,7 @@ class ComputerHibernate(ComputerState):
     random_states = ['ComputerSuspend', 'ComputerHibernate', 'ComputerOff']
 
 
-class Computer(object):
+class Computer:
     """ A class representing a computer """
 
     def __init__(self, model):

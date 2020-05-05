@@ -48,7 +48,7 @@ class ItemCollection(PrototypeM):
         self.items = items
 
 
-class Prototype(object):
+class Prototype:
     """ A prototype base class """
 
     def clone(self):
@@ -63,7 +63,7 @@ class Register(Prototype):
         self.names = names
 
 
-class SPrototype(object):
+class SPrototype:
     """ A prototype base class using shallow copy """
 
     def clone(self):

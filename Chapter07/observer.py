@@ -20,7 +20,7 @@ class Alarm(threading.Thread):
         # Subscribers
         self.subscribers = []
         self.flag = True
-        threading.Thread.__init__(self, None, None)
+        super().__init__(None, None)
 
     def register(self, subscriber):
         """ Register a subscriber for alarm notifications """
@@ -47,7 +47,7 @@ class Alarm(threading.Thread):
             self.notify()
 
 
-class DumbClock(object):
+class DumbClock:
     """ A dumb clock class using an Alarm object """
 
     def __init__(self):

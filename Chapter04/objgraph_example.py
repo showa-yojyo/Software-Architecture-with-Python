@@ -12,14 +12,14 @@ Make sure you install graphviz and xdot before running this.
 import objgraph
 
 
-class MyRefClass(object):
+class MyRefClass:
     pass
 
 
 ref = MyRefClass()
 
 
-class C(object):
+class C:
     pass
 
 

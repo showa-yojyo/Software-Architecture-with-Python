@@ -10,7 +10,7 @@ import operator
 from rankbase import RankBase
 
 
-class UrlRank(object):
+class UrlRank:
     """ Accept URLs as inputs and rank them in
     terms of how much a word occurs in them """
 

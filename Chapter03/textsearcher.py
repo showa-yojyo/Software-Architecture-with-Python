@@ -9,7 +9,7 @@ and returning results
 import operator
 
 # このスーパークラス (object) は冗長なので書いてはいけないと別の文献で言っている。
-class TextSearcher(object):
+class TextSearcher:
     """ A class which performs a text search and returns results """
 
     def __init__(self, db):

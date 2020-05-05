@@ -8,7 +8,7 @@ a few sub-classes demonstrating the power of the builder pattern.
 """
 
 
-class Room(object):
+class Room:
     """ A class representing a Room in a house """
 
     def __init__(self, nwindows=2, direction='S'):
@@ -20,7 +20,7 @@ class Room(object):
                                                   self.nwindows)
 
 
-class Porch(object):
+class Porch:
     """ A class representing a Porch in a house """
 
     def __init__(self, ndoors=2, direction='W'):
@@ -32,7 +32,7 @@ class Porch(object):
                                                  self.ndoors)
 
 
-class LegoHouse(object):
+class LegoHouse:
     """ A lego house class """
 
     def __init__(self, nrooms=0, nwindows=0, nporches=0):
@@ -66,7 +66,7 @@ class LegoHouse(object):
         self.porches.append(porch)
 
 
-class LegoHouseBuilder(object):
+class LegoHouseBuilder:
     """ Lego house builder class """
 
     def __init__(self, *args, **kwargs):

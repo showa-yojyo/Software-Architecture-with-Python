@@ -6,7 +6,7 @@ import operator
 import requests
 
 
-class UrlRank(object):
+class UrlRank:
     """ Accept URLs as inputs and rank them in
     terms of how much a word occurs in them """
 

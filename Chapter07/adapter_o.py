@@ -10,7 +10,7 @@ for magic method routing.
 import itertools
 
 
-class Polygon(object):
+class Polygon:
     """ A polygon class """
 
     def __init__(self, *sides):
@@ -46,7 +46,7 @@ class InvalidPolygonError(Exception):
     pass
 
 
-class Triangle(object):
+class Triangle:
     """ Triangle class from Polygon using class adapter """
 
     def __init__(self, *sides):
@@ -103,7 +103,7 @@ class Triangle(object):
         return pow(total, 0.5)
 
 
-class Rectangle(object):
+class Rectangle:
     """ Rectangle class from Polygon using object adapter """
 
     method_mapper = {'is_square': 'is_regular'}

@@ -15,7 +15,7 @@ import sys
 from communication import send, receive
 
 
-class ChatServer(object):
+class ChatServer:
     """ Simple chat server using select """
 
     def __init__(self, port=3490, backlog=5):

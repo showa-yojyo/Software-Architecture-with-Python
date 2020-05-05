@@ -34,7 +34,7 @@ def get_web_url(url, default='http'):
     return url
 
 
-class UrlFetcher(object):
+class UrlFetcher:
     """ Implements the steps of fetching a URL.
 
     Main methods:

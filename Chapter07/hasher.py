@@ -10,7 +10,7 @@ using pluggable algorithms
 # NOTE: This combines the two methods provided in the book into one class.
 
 
-class StreamHasher(object):
+class StreamHasher:
     """ Stream hasher class with configurable algorithm """
 
     def __init__(self, algorithm, chunk_size=4096):

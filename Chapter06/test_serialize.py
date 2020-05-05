@@ -10,7 +10,7 @@ import os
 import pickle
 
 
-class ShellExploit(object):
+class ShellExploit:
     """ A shell exploit class """
 
     def __reduce__(self):

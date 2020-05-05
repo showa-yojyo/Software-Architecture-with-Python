@@ -40,7 +40,7 @@ def find_optimal_route(start_time,
                                                           favorite_route))))
 
 
-class MiscClassC(object):
+class MiscClassC:
     """ A class which does almost nothing """
 
     def __init__(self, xnum, ynum):
@@ -61,7 +61,7 @@ class MiscClassD(MiscClassC):
     """ Sub-class of MiscClassC """
 
     def __init__(self, xnum, ynum=0):
-        super(MiscClassD, self).__init__(xnum, ynum)
+        super().__init__(xnum, ynum)
 
     def some_func(self, xnum, ynum):
         """ A function which does summing """
