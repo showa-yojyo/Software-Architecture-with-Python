@@ -1,14 +1,14 @@
-1. common_items.py
-2. plot.py
-3. primes.py
-4. mem_profile_example.py
-5. sub_string.py
-6. objgraph_example.py
-7. rotate.py
-8. sub_string2.py
-9. defaultdict_example.py
-10. ordered.py
-11. hound_words.py
-12. chainmap_example.py
-13. named.py
-14. bloomtest.py
+1. common_items.py: time.time() の差による時間測定
+2. plot.py: Matplotlib による単純プロット
+3. primes.py: Itereator の実装例 __iter__(), __next__().
+4. mem_profile_example.py: プロファイリング メモリ パッケージ不明
+5. sub_string.py: 同じく
+6. objgraph_example.py: Objgraph 実演コード
+7. rotate.py: collections.deque 実演コード 列に対する rotate 操作
+8. sub_string2.py: プロファイルング メモリ pympler
+9. defaultdict_example.py: defaultdict 実演
+10. ordered.py: collections.OrderedDict 実演
+11. hound_words.py: collections.Counter 実演
+12. chainmap_example.py: collections.ChainMap 実演
+13. named.py: collections.namedtuple 実演。_replace() は知らなんだ
+14. bloomtest.py: pybloom 実演だが動かない。

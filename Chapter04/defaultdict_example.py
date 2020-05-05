@@ -22,7 +22,7 @@ for word in text.split():
     except KeyError:
         counts[word] = 1
 
-print(f"Counts of word {word} => counts[word]")
+print(f"Counts of word {word} => {counts[word]}")
 
 cities = ['Jakarta', 'Delphi', 'Newyork',
           'Bonn', 'Kolkata', 'Bangalore', 'Seoul']

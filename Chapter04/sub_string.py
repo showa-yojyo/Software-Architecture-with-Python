@@ -30,9 +30,7 @@ def slices(s, n):
     return list(map(''.join, list(zip(*(s[i:] for i in range(n))))))
 
 # Uncomment for profiling with line or memory profiler
-# @profile
-
-
+#@profile
 def sub_string(seq1, seq2):
     """ Return sub-strings from seq2 which are part of strings in seq1
     - Optimized version
