@@ -1,15 +1,15 @@
-1. guessing.py
-2. guessing_fix.py
-3. test_eval.py
-4. test_eval2.py
-5. len_overflow.py
-6. test_serialize.py
-7. test_serialize_safe.py
-8. test_serialize_json.py
-9. ssti-example.py
-10. ssti-example-fixed.py
-11. ssti-example-dos.py
-12. ssti-example-dos-fix.py
-13. print_employee.py
-14. compare_passwords.py
-15. crytpo_password_compare.py
+1. guessing.py: input() と randrange() を用いたゲーム
+2. guessing_fix.py: 入力が整数であるかテストするように修正したもの
+3. test_eval.py: eval() が危険であることを示す実演
+4. test_eval2.py: eval() の引数 global で組み込み要素を空に指定する
+5. len_overflow.py: __len__() は maxint を超える値を返してはならない (OverflowError)
+6. test_serialize.py: pickle が insecure であることを示す実演
+7. test_serialize_safe.py いちおう中身は出なくなるがプログラムも落ちる
+8. test_serialize_json.py JSON 版 shell exploit は未遂に終わる
+9. ssti-example.py: Server Side Template Injection 実演。Flask が必要。
+10. ssti-example-fixed.py: 上記実演修正例。テンプレートを使う。
+11. ssti-example-dosに.py: それでも DOS, XSS 攻撃は弱いというもの（演算コードを URL に埋め込む）
+12. ssti-example-dos-fix.py: テンプレートに e フィルターを加えることで回避
+13. print_employee.py: Python の %s とかは危険である
+14. compare_passwords.py: getpass, hashlib.sha1() の hexdigest() は覚えておく
+15. crytpo_password_compare.py: PassLib 利用

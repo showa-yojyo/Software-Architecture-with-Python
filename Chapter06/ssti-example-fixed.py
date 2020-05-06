@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Code Listing #10
 
 """
@@ -8,7 +9,7 @@ SSTI - Server Side Template Injection example (using Flask), with security issue
 
 # ssti-example-fixed.py
 from flask import Flask
-from flask import request, render_template_string, render_template
+from flask import request, render_template_string
 
 app = Flask(__name__)
 
@@ -20,7 +21,7 @@ def hello_ssti():
     if request.args.get('name'):
         person['name'] = request.args.get('name')
 
-    template = '''<h2>Hello {{ person.name }} !</h2>'''
+    template = '''<h2>Hello {{ person.name }} !</h2>''' # 唯一の変更行
     return render_template_string(template, person=person)
 
 

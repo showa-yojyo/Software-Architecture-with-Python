@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Code Listing #14
 
 """
@@ -8,7 +9,7 @@ Comparing passwords in memory - using simple hashes
 
 import hashlib
 import sqlite3
-import getpass
+import getpass # 標準モジュール
 
 
 def read_password(user):
@@ -20,6 +21,7 @@ def read_password(user):
     try:
         passwd = cursor.execute(
             "select password from passwds where user='%(user)s'" % locals()).fetchone()[0]
+        # 急所
         return hashlib.sha1(passwd.encode('utf-8')).hexdigest()
     except TypeError:
         pass
@@ -29,7 +31,7 @@ def verify_password(user):
     """ Verify password for user """
 
     hash_pass = hashlib.sha1(getpass.getpass(
-        "Password: ").encode('utf-8')).hexdigest()
+        "Password: ").encode('utf-8')).hexdigest() # 急所
     print(hash_pass)
     if hash_pass == read_password(user):
         print('Password accepted')

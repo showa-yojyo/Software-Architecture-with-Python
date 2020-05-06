@@ -9,9 +9,10 @@ fixed.
 
 # ssti-example-dos-fix.py
 from flask import Flask
-from flask import request, render_template_string, render_template
+from flask import request, render_template_string
 
 app = Flask(__name__)
+# 修正点
 TEMPLATE = '''
 <html>
  <head><title> Hello {{ person.name | e }} </title></head>

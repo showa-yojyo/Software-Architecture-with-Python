@@ -9,7 +9,7 @@ Compare passwords using crytpographic hashing using salts
 # crypto_password_compare.py
 import sqlite3
 import getpass
-from passlib.hash import bcrypt
+from passlib.hash import bcrypt # 外部パッケージ
 
 
 def read_passwords():
