@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #13
-
 """
 
 The iterator pattern - A prime number iterator
@@ -8,7 +8,7 @@ The iterator pattern - A prime number iterator
 
 import itertools
 
-
+# Python では __iter__() と __next__() があるクラスは iterator となる。
 class Prime:
     """ An iterator for prime numbers """
 
@@ -55,8 +55,8 @@ if __name__ == "__main__":
     # First 100 primes
     print(list(itertools.islice(Prime(2), 100)))
     # First 10 primes ending with 1
-    print(list(itertools.islice(itertools.filterfalse(
-        lambda x: x % 10 != 1, Prime(2)), 10)))
+    print(list(itertools.islice(
+        (x for x in Prime(2) if x % 10 == 1), 10)))
     # First 10 palindromic primes
-    print(list(itertools.islice(itertools.filterfalse(
-        lambda x: str(x) != str(x)[-1::-1], Prime(10)), 10)))
+    print(list(itertools.islice(
+        (x for x in Prime(10) if str(x) == str(x)[-1::-1]), 10)))

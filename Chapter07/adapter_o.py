@@ -33,7 +33,7 @@ class Polygon:
 
         # Yes: if all sides are equal
         side = self.sides[0]
-        return all([x == side for x in self.sides[1:]])
+        return all(x == side for x in self.sides[1:])
 
     def area(self):
         """ Calculate and return area """
@@ -45,7 +45,7 @@ class Polygon:
 class InvalidPolygonError(Exception):
     pass
 
-
+# Adapter パターン (has-a)
 class Triangle:
     """ Triangle class from Polygon using class adapter """
 
@@ -56,6 +56,7 @@ class Triangle:
     def perimeter(self):
         return self.polygon.perimeter()
 
+    # デコレーターとして使う
     def is_valid(f):
         """ Is the triangle valid """
 
@@ -102,7 +103,7 @@ class Triangle:
 
         return pow(total, 0.5)
 
-
+# Adapter (has-a)
 class Rectangle:
     """ Rectangle class from Polygon using object adapter """
 
@@ -131,6 +132,7 @@ class Rectangle:
 
         return inner
 
+    # オリジナルのメソッド呼び出しをサポートする
     def __getattr__(self, name):
         """ Overloaded __getattr__ to forward methods to wrapped instance """
 
@@ -139,6 +141,7 @@ class Rectangle:
             w_name = self.method_mapper[name]
             print('Forwarding to method', w_name)
             # Map the method to correct one on the instance
+            # is_square() のほうは AttributeError になりそうだ
             return getattr(self.polygon, w_name)
         else:
             # Assume method is the same

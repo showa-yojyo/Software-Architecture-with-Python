@@ -1,4 +1,5 @@
 # Code Listing #1
+# hasher.py 参照
 
 """
 Take an input stream and hash it's contents using MD5 and return the hash digest

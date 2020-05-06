@@ -11,7 +11,7 @@ import time
 
 from datetime import datetime
 
-
+# Publisher 役のクラス
 class Alarm(threading.Thread):
     """ A class which generates periodic alarms """
 
@@ -38,6 +38,7 @@ class Alarm(threading.Thread):
 
         self.flag = False
 
+    # Thread からのオーバーライドメソッドはこれしかない
     def run(self):
         """ Run the alarm generator """
 
@@ -46,7 +47,7 @@ class Alarm(threading.Thread):
             # Notify
             self.notify()
 
-
+# Subscriber 役のクラス
 class DumbClock:
     """ A dumb clock class using an Alarm object """
 

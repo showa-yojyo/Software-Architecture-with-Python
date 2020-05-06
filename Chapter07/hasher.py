@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Code Listing - #3
 
 """
@@ -13,6 +14,7 @@ using pluggable algorithms
 class StreamHasher:
     """ Stream hasher class with configurable algorithm """
 
+    # callable を受け取る
     def __init__(self, algorithm, chunk_size=4096):
         self.chunk_size = chunk_size
         self.hash = algorithm()
@@ -33,8 +35,11 @@ class StreamHasher:
 if __name__ == "__main__":
     from hashlib import md5, sha1
 
-    md5h = StreamHasher(algorithm=md5)
     # Both works
-    print(md5h(open('hasher.py')))
-    shah_h = StreamHasher(algorithm=sha1)
-    print(shah_h(open('hasher.py')))
+    with open('hasher.py', encoding='utf-8') as f:
+        md5h = StreamHasher(algorithm=md5)
+        print(md5h(f))
+
+    with open('hasher.py', encoding='utf-8') as f:
+        shah_h = StreamHasher(algorithm=sha1)
+        print(shah_h(f))

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Code Listing #8
 
 """
@@ -93,7 +94,7 @@ class LegoHouseBuilder:
             porch = Porch(1)
             self.house.add_porch(porch)
 
-
+# つましいレゴハウス
 class BudgetLegoHouseBuilder(LegoHouseBuilder):
     """ Builder building budget lego house with 1 room and no porch and rooms having 1 window """
 
@@ -123,7 +124,7 @@ class NorthFacingHouseBuilder(LegoHouseBuilder):
             porch = Porch(1, direction='N')
             self.house.add_porch(porch)
 
-
+# これだけ注意
 class NorthFacingSmallHouseBuilder(NorthFacingHouseBuilder, SmallLegoHouseBuilder):
     pass
 

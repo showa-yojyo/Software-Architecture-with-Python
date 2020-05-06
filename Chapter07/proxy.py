@@ -6,6 +6,7 @@ Proxy design pattern - An example of an instance counting proxy
 
 """
 
+# 抽象基底クラスを作るための import
 from abc import ABCMeta, abstractmethod
 
 
@@ -48,13 +49,14 @@ class Accountant(Employee):
     def get_role(self):
         return "accounting"
 
-
+# これが前回なかったクラス
 class EmployeeProxy:
     """ Counting proxy class for Employees """
 
     # Count of employees
     count = 0
 
+    # __new__() を実装してカウンターを仕込む
     def __new__(cls, *args):
         """ Overloaded __new__ """
         # To keep track of counts
@@ -62,6 +64,7 @@ class EmployeeProxy:
         cls.incr_count()
         return instance
 
+    # Employee オブジェクトをラップする
     def __init__(self, employee):
         self.employee = employee
 
@@ -83,6 +86,7 @@ class EmployeeProxy:
     def __str__(self):
         return str(self.employee)
 
+    # C++ でいうと operator->() といったところ
     def __getattr__(self, name):
         """ Redirect attributes to employee instance """
 
@@ -101,6 +105,7 @@ class EmployeeProxyFactory:
     def create(cls, name, *args):
         """ Factory method for creating an Employee instance """
 
+        # この name はクラス名であって従業員オブジェクトの名前ではない
         name = name.lower().strip()
 
         if name == 'engineer':

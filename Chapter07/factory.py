@@ -1,14 +1,15 @@
 # Code Listing #6
-
+# 概念説明用のコードか？
 """
 
 Implementation of the Factory/Factory Method Design Pattern
 
 """
 
+# 抽象基底クラスのための要素
 from abc import ABCMeta, abstractmethod
 
-
+# 抽象基底クラス
 class Employee(metaclass=ABCMeta):
     """ An Employee class """
 
@@ -61,6 +62,6 @@ class EmployeeFactory:
         if name == 'engineer':
             return Engineer(*args)
         elif name == 'software engineer':
-            return SoftwareEngineer(*args)
+            return Accountant(*args)
         elif name == 'admin':
             return Admin(*args)

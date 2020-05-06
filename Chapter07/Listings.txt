@@ -1,16 +1,16 @@
-1. hasher.py
-2. hash_stream.py
-3. hash_stream2.py
-4. singleton.py
-5. borg.py
-6. factory.py
-7. prototype.py
-8. builder.py
-9. adapter.py
-10. adapter_o.py
-11. facade.py
-12. proxy.py
-13. iterator.py
-14. observer.py
-15. observer_async.py
-16. state.py
+1. hasher.py: これは Stratagey パターンか？ Python の duck typing を利用したか。
+2. hash_stream.py: hasher.py の動機となるコード片
+3. hash_stream2.py: 2. と同じ
+4. singleton.py: Singleton パターンを複数の方法で実装する
+5. borg.py: 異なるオブジェクトから同じ状態にアクセスするパターンか
+6. factory.py: if-else が少々ダサい Factory
+7. prototype.py: Prototype パターンと Singleton, Factory の複合の研究
+8. builder.py: Builder パターンを古典的手法により実装する
+9. adapter.py: これだけ見ると問題点が見えてこない
+10. adapter_o.py: Adapter パターン is_valid() の呼び出し方が洒脱なのか
+11. facade.py: Facade パターン コードの前半がゴチャゴチャしているのがミソ
+12. proxy.py: Proxy パターン
+13. iterator.py: Iterator パターン main の islice() も注目したい
+14. observer.py: Observer パターン。Publish/Subscribe と呼んでいる。マルチスレッド対応。
+15. observer_async.py: Observer パターンの非同期バージョン。
+16. state.py: State パターン。eval() を消す refactoring を考えたい。

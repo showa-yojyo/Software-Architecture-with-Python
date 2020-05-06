@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #7
-
 """
 
 Protype design pattern and related classes
@@ -8,15 +8,14 @@ Protype design pattern and related classes
 
 
 import copy
-from abc import ABCMeta
-from borg import Borg
+from borg import Borg # 再利用も大事だ
 
-
+# type から派生したクラス
 class MetaPrototype(type):
     """ A metaclass for Prototypes """
 
     def __init__(cls, *args):
-        type.__init__(cls, *args)
+        super().__init__(*args)
         cls.clone = lambda self: copy.deepcopy(self)
 
 
@@ -24,29 +23,31 @@ class MetaSingletonPrototype(type):
     """ A metaclass for Singleton & Prototype patterns """
 
     def __init__(cls, *args):
+        # main までにここに来ることに注意
         print(cls, "__init__ method called with args", args)
-        type.__init__(cls, *args)
+        super().__init__(*args)
         cls.instance = None
         cls.clone = lambda self: copy.deepcopy(cls.instance)
 
     def __call__(cls, *args, **kwargs):
         if not cls.instance:
             print(cls, "creating prototypical instance", args, kwargs)
-            cls.instance = type.__call__(cls, *args, **kwargs)
+            cls.instance = super().__call__(*args, **kwargs)
         return cls.instance
 
-
+# サブクラス子
 class PrototypeM(metaclass=MetaSingletonPrototype):
     """ Top-level prototype class using MetaSingletonPrototype """
     pass
 
-
+# サブクラス孫
 class ItemCollection(PrototypeM):
     """ An item collection class """
 
     def __init__(self, items=[]):
         self.items = items
 
+# 以下、別系統のクラス群定義
 
 class Prototype:
     """ A prototype base class """
@@ -55,14 +56,14 @@ class Prototype:
         """ Return a clone of self """
         return copy.deepcopy(self)
 
-
+# サブクラス
 class Register(Prototype):
     """ A student Register class  """
 
     def __init__(self, names=[]):
         self.names = names
 
-
+# ディープでないコピー
 class SPrototype:
     """ A prototype base class using shallow copy """
 
@@ -70,7 +71,7 @@ class SPrototype:
         """ Return a clone of self """
         return copy.copy(self)
 
-
+# サブクラス 1
 class SRegister(SPrototype):
     """ Sub-class of SPrototype """
 
@@ -78,7 +79,7 @@ class SRegister(SPrototype):
         self.stuff = stuff
         self.names = names
 
-
+# サブクラス 2
 class Name(SPrototype):
     """ A class representing a person's name """
 
@@ -89,7 +90,7 @@ class Name(SPrototype):
     def __str__(self):
         return ' '.join((self.first, self.second))
 
-
+# サブクラス 3
 class Animal(SPrototype):
     """ A class representing an animal """
 
@@ -100,7 +101,7 @@ class Animal(SPrototype):
     def __str__(self):
         return ' '.join((str(self.type), self.name))
 
-
+# サブクラス 4
 class Address(SPrototype):
     """ An address class """
 
@@ -115,6 +116,7 @@ class Address(SPrototype):
         return ', '.join((list(map(str, (self.building, self.street, self.city, self.zip, self.country)))))
 
 
+# Singleton 風クラスからの派生
 class PrototypeFactory(Borg):
     """ A Prototype factory/registry class """
 
@@ -126,13 +128,14 @@ class PrototypeFactory(Borg):
     def register(self, instance):
         """ Register a given instance """
 
+        # {型: オブジェクト}
         self._registry[instance.__class__] = instance
 
     def clone(self, klass):
         """ Return cloned instance of given class """
 
         instance = self._registry.get(klass)
-        if instance == None:
+        if not instance:
             print('Error:', klass, 'not registered')
         else:
             return instance.clone()
@@ -141,24 +144,26 @@ class PrototypeFactory(Borg):
 if __name__ == "__main__":
     r1 = Register(names=['amy', 'stu', 'jack'])
     r2 = r1.clone()
-    print(r1)
-    print(r2)
-    print(r1 == r2)
+    print(r1) # Register object at xxxxx
+    print(r2) # Register object at yyyyy
+    print(r1 == r2) # False
 
     r1 = SRegister(names=['amy', 'stu', 'jack'])
     r2 = r1.clone()
 
     r1.names.append('bob')
-    print('r1.names==r2.names', r1.names == r2.names)
-    print('r1.names is r2.names', r1.names is r2.names)
+    print(f'{r1.names == r2.names = }') # True
+    print(f'{r1.names is r2.names = }') # True
+
     i1 = ItemCollection(items=['apples', 'grapes', 'oranges'])
-    print(i1)
+    # 'ItemCollection creating prototypycal...' が出力
+    print(i1) # ItemCollection object at
     # Invokes the Prototype API
     i2 = i1.clone()
-    print('i1.items is i2.items', i1.items is i2.items)
+    print(f'{i1.items is i2.items = }') # False
     # Invokes the Singleton API
     i3 = ItemCollection(items=['apples', 'grapes', 'oranges'])
-    print('i1 is i3', i1 is i3)
+    print(f'{i1 is i3 = }') # True
 
     # Illustrating factory
     name = Name('Bill', 'Bryson')
@@ -173,13 +178,14 @@ if __name__ == "__main__":
     name2 = factory.clone(Name)
     animal2 = factory.clone(Animal)
 
-    print(name, name2)
-    print(animal, animal2)
+    print(name, name2) # Bill Bryson Bill Bryson
+    print(animal, animal2) # Wild Elephant Wild Elephant
 
-    print('name is not name2', name is not name2)
-    print('animal is not animal2', animal is not animal2)
+    print(f'{name is not name2 = }') # True
+    print(f'{animal is not animal2 = }') # True
 
     class C:
         pass
 
-    factory.clone(C)
+    # register() していないと clone() できないことを示す：
+    factory.clone(C) # Error: C not registered

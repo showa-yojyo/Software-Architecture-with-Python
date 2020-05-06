@@ -52,7 +52,7 @@ class Triangle(Polygon):
         """ Is this an equilateral triangle ? """
 
         if self.is_valid():
-            return super(Triangle, self).is_regular()
+            return super().is_regular()
 
     def is_isosceles(self):
         """ Is the triangle isosceles """

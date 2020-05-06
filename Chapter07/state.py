@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #16
-
 """
 
 State pattern - Using a computer and its state as an example.
@@ -10,7 +10,10 @@ The implementation technique uses an iterator.
 import random
 import itertools
 
+class IllegalStateTransition(Exception):
+    pass
 
+# State かつ Iterator
 class ComputerState:
     """ Base class for state of a computer """
 
@@ -29,6 +32,8 @@ class ComputerState:
         return self
 
     def change(self):
+        # たぶん __next__() のコードを本メソッドの定義として、
+        # __next__() の定義は self.change() とするのが好み。
         return self.__next__()
 
     def set(self, state):
@@ -38,18 +43,18 @@ class ComputerState:
             if state in self.next_states:
                 # Set index
                 self.index = self.next_states.index(state)
-                self.__class__ = eval(state)
+                self.__class__ = eval(state) # 刺激的なコード
                 return self.__class__
             else:
                 # Raise an exception for invalid state change
                 current = self.__class__
-                new = eval(state)
-                raise Exception(
+                new = eval(state) # 刺激的なコード
+                raise IllegalStateTransition(
                     'Illegal transition from %s to %s' % (current, new))
         else:
             self.index = 0
             if state in self.random_states:
-                self.__class__ = eval(state)
+                self.__class__ = eval(state) # 刺激的なコード
                 return self.__class__
 
     def __next__(self):
@@ -57,7 +62,7 @@ class ComputerState:
 
         if self.index < len(self.next_states):
             # Always move to next state first
-            self.__class__ = eval(self.next_states[self.index])
+            self.__class__ = eval(self.next_states[self.index]) # 刺激的なコード
             # Keep track of the iterator position
             self.index += 1
             return self.__class__
@@ -69,11 +74,13 @@ class ComputerState:
             self.index = 0
             if len(self.random_states):
                 state = random.choice(self.random_states)
-                self.__class__ = eval(state)
+                self.__class__ = eval(state) # 刺激的なコード
                 return self.__class__
             else:
                 raise StopIteration
 
+# 以下 ConcreteState クラス群。
+# クラス変数に注意（オブジェクト化しないで利用することがわかる）
 
 class ComputerOff(ComputerState):
     next_states = ['ComputerOn']
@@ -109,7 +116,7 @@ class Computer:
     def change(self, state=None):
         """ Change state """
 
-        if state == None:
+        if not state:
             return self.state.change()
         else:
             return self.state.set(state)

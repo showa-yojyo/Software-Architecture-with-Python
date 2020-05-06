@@ -1,4 +1,5 @@
 # Code Listing #2
+# hasher.py 参照
 
 """
 Take an input stream and hash it's contents and return the hash digest
@@ -30,3 +31,6 @@ def hash_stream_md5(stream, chunk_size=4096):
         shash.update(chunk)
 
     return shash.hexdigest()
+
+# この二つの関数がほとんど同じなので hasher.py のように
+# refactoring するというのが本書の議論のようだ。

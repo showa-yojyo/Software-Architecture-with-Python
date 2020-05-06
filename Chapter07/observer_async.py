@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #15
-
 """
 
 Asynchronouse Observer Example
@@ -32,6 +32,7 @@ class NewsPublisher:
     def register(self, subscriber, channel):
         """ Register a subscriber for a news channel """
 
+        # このように weakref.proxy() を使えるようになりたい
         self.subscribers[channel].append(weakref.proxy(subscriber))
 
     def stop(self):
@@ -76,6 +77,7 @@ class NewsSubscriber:
         self.future_status = {}
         self.flag = True
 
+    # callback() というメソッド名がダサいがわかりやすさ優先だ。
     async def callback(self, channel, data):
         """ Callback method """
 
