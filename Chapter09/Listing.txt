@@ -4,3 +4,13 @@ There is not much code in this chapter so listings are a bit different from othe
 2. fabfile.py  - The fabric script shown in the chapter.
 3. dependencies.yaml - The ansible playbook shown in the chapter. For it to get to work for you,
 you will need to change the ansible host name.
+
+この章は自作パッケージのインストーラーを作成する方法の議論か？
+
+mandelbrot/ 以下をシンプルなパッケージ構成とみなせる。setup.py がある。
+せっかくなのでインストールしておく。Windows だと `mandelbrot.mp.mandelbrot`
+以下の関数を実行すると Pymp 由来の実行時エラーが起こる。
+
+[Welcome to Fabric! — Fabric documentation](http://www.fabfile.org/)
+
+YAML ファイルについては謎。
