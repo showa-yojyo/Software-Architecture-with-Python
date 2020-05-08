@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #11
-
 """
 
 A simple data processing pipeline using generators to print count of words in files.
@@ -7,14 +7,15 @@ A simple data processing pipeline using generators to print count of words in fi
 """
 
 # pipe_words_gen.py
-import os
+import os # listdir() を使う
 
 
 def read(filenames):
     """ Generator that yields data from filenames as (filename, data) tuple """
 
     for filename in filenames:
-        yield filename, open(filename).read()
+        with open(filename, encoding='utf-8') as f:
+            yield filename, f.read()
 
 
 def words(input):
@@ -23,7 +24,7 @@ def words(input):
     for filename, data in input:
         yield filename, len(data.split())
 
-
+# これと同じことをするものが標準にある。
 def filter(input, pattern):
     """ Filter input stream according to a pattern """
 
@@ -39,6 +40,8 @@ if __name__ == "__main__":
     stream2 = read(stream1)
     # Piped to last filter (sink)
     stream3 = words(stream2)
+
+    # すなわち words(read(filter(os.listdir('.'), '.py')))
 
     for item in stream3:
         print(item)

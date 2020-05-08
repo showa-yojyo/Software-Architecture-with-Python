@@ -6,6 +6,7 @@ Multiuser chat server using eventlet
 
 """
 
+# Eventlet Networking Library (https://eventlet.net/)
 import eventlet
 from eventlet.green import socket
 

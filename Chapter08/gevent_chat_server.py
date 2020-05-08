@@ -8,7 +8,8 @@ Multi chat server using gevent
 
 # gevent_chat_server.py
 
-
+# gevent はコルーチンベースのネットワークライブラリーとある
+# http://www.gevent.org/
 import gevent
 from gevent import monkey
 from gevent import socket

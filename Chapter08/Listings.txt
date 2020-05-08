@@ -1,12 +1,24 @@
-1. models.py
-2. chatserver.py
-3. chatclient.py
-4. communication.py
-5. twisted_fetch_url.py
-6. twisted_chat_server.py
-7. twisted_chat_client.py
-8. eventlet_chat_server.py
-9. gevent_chat_server.py
-10. pipe_words.py
-11. pipe_words_gen.py
-12. pipe_recent_gen.py
+1. models.py: Django のコードだが動作確認法不明
+2. chatserver.py: socket, select など低水準なものを使う。
+3. chatclient.py:
+4. communication.py: 2. と 3. が import するモジュール。通信データの直列化など。
+5. twisted_fetch_url.py: Twisted 利用コード。文字列を UTF-8 に encode() しないといけない
+6. twisted_chat_server.py: 動作しているのかしていないのか？
+7. twisted_chat_client.py: プロンプト変化後のエコーがおかしい
+8. eventlet_chat_server.py: Eventlet 利用コード
+9. gevent_chat_server.py: gevent 利用コード
+10. pipe_words.py: 標準のみ。単純なマルチプロセス実行実演コード。Pipe(), Process().
+11. pipe_words_gen.py: 標準のみ。ジェネレーターでパイプライン処理を実装する。
+12. pipe_recent_gen.py: 標準のみ。最終更新ファイルを表示。os.popen(), os.system() など。
+
+主題はネットワークプログラミング、プロセス間通信だ。
+
+[The Web framework for perfectionists with deadlines | Django](https://www.djangoproject.com/)
+[ソケットプログラミング HOWTO — Python 3.8.3rc1 ドキュメント](https://docs.python.org/ja/3/howto/sockets.html)
+[Twisted](https://twistedmatrix.com/trac/)
+[Eventlet Networking Library](https://eventlet.net/)
+[What is gevent? — gevent 20.5.1.dev0 documentation](http://www.gevent.org/)
+
+* 有名どころのパッケージは初心者向けガイドくらいはやっておく。
+* ソケットプログラミングは相変わらず掴みどころがわからない。
+* os.popen() は subprocess.Popen() のラッパーなので書き換える。

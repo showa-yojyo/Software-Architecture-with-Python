@@ -6,6 +6,8 @@ Glossary models - Showing django admin view
 
 """
 
+# Django はサードパーティー製ウェブフレームワークパッケージ。
+# https://www.djangoproject.com/
 from django.db import models
 
 

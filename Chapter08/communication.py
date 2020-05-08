@@ -16,8 +16,10 @@ import struct
 def send(channel, *args):
     """ Send a message to a channel """
 
+    # ある意味急所。ソケットプログラミングに独特のコード。
     buf = pickle.dumps(args)
-    value = socket.htonl(len(buf))
+    # send なのでホスト形式からネットワーク形式にコンバートする
+    value = socket.htonl(len(buf)) # 整数の変換 h: host n: network l: long
     size = struct.pack("L", value)
     channel.send(size)
     channel.send(buf)
@@ -29,13 +31,13 @@ def receive(channel):
     size = struct.calcsize("L")
     size = channel.recv(size)
     try:
+        # receive はその逆にコンバートする
         size = socket.ntohl(struct.unpack("L", size)[0])
-    except struct.error as e:
+    except struct.error:
         return ''
 
     buf = ""
-
-    while len(buf) < size:
-        buf = channel.recv(size - len(buf))
+    while (lenbuf := len(buf)) < size:
+        buf += channel.recv(size - lenbuf)
 
     return pickle.loads(buf)[0]

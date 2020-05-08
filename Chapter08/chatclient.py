@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #3
-
 """
 
 Chat client using select based I/O multiplexing
@@ -27,6 +27,7 @@ class ChatClient:
         # Connect to server at port
         try:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # 即 connect() はクライアントソケット。
             self.sock.connect((host, self.port))
             print('Connected to chat server@%d' % self.port)
             # Send my name...
@@ -35,7 +36,7 @@ class ChatClient:
             # Contains client address, set it
             addr = data.split('CLIENT: ')[1]
             self.prompt = '[' + '@'.join((self.name, addr)) + ']> '
-        except socket.error as e:
+        except socket.error:
             print('Could not connect to chat server @%d' % self.port)
             sys.exit(1)
 
@@ -48,26 +49,29 @@ class ChatClient:
                 sys.stdout.flush()
 
                 # Wait for input from stdin & socket
-                inputready, outputready, exceptrdy = select.select(
-                    [0, self.sock], [], [])
+                ready_to_read, ready_to_write, in_error = select.select(
+                    [0, self.sock], # potential readers
+                    [], # potential writers
+                    []) # empty
 
-                for i in inputready:
-                    if i == 0:
-                        data = sys.stdin.readline().strip()
-                        if data:
-                            send(self.sock, data)
+                # 実際に読めるソケットをすべて処理する
+                for i in ready_to_read:
+                    if i == 0 and (data := sys.stdin.readline().strip()):
+                        send(self.sock, data)
                     elif i == self.sock:
                         data = receive(self.sock)
+                        # 0 バイト受信は接続終了を常に意味する。
                         if not data:
                             print('Shutting down.')
                             self.flag = True
                             break
-                        else:
-                            sys.stdout.write(data + '\n')
-                            sys.stdout.flush()
+
+                        sys.stdout.write(data + '\n')
+                        sys.stdout.flush()
 
             except KeyboardInterrupt:
                 print('Interrupted.')
+                # ソケットプログラミングでは close() は特に重要
                 self.sock.close()
                 break
 

@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #6
-
 """
 
 Multiuser chat server using Twisted
@@ -25,26 +25,28 @@ class Chat(protocol.Protocol):
         self._peer = self.transport.getPeer()
         # Find out and inform other clients
         user = self.peers.get((self._peer.host, self._peer.port))
-        if user != None:
-            self.broadcast('(User %s disconnected)\n' % user, user)
+        if user:
+            self.broadcast(
+                ('(User %s disconnected)\n' % user).encode('utf-8'), user)
             print('User %s disconnected from %s' % (user, self._peer))
 
     def broadcast(self, msg, user):
         """ Broadcast chat message to all connected users except 'user' """
 
-        for key in self.transports.keys():
+        for key in self.transports:
             if key != user:
-                if msg != "<handshake>":
-                    self.transports[key].write('#[' + user + "]>>> " + msg)
+                if msg != b"<handshake>":
+                    self.transports[key].write(
+                        ('#[' + user + "]>>> " + msg).encode('utf-8'))
                 else:
                     # Inform other clients of connection
                     self.transports[key].write(
-                        '(User %s connected from %s)\n' % (user, self._peer))
+                        ('(User %s connected from %s)\n' % (user, self._peer)).encode('utf-8'))
 
     def dataReceived(self, data):
         """ Callback when data is ready to be read from the socket """
 
-        user, msg = data.split(":")
+        user, msg = data.split(b":")
         print("Got data=>", msg, "from", user)
         self.transports[user] = self.transport
         # Make an entry in the peers dictionary

@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #7
-
 """
 
 Multiuser chat client using Twisted
@@ -23,6 +23,7 @@ class ChatProtocol(protocol.Protocol):
         self.prompt = '[' + '@'.join((self.client,
                                       socket.gethostname().split('.')[0])) + ']> '
 
+
     def input_prompt(self):
         """ The input prefix for client """
         sys.stdout.write(self.prompt)
@@ -37,7 +38,8 @@ class ChatClientProtocol(ChatProtocol):
 
     def connectionMade(self):
         print('Connection made')
-        self.output.write(self.client + ":<handshake>")
+        self.output.write(
+            (self.client + ":<handshake>").encode('utf-8'))
 
     def processData(self, data):
         """ Process data received """
@@ -49,7 +51,8 @@ class ChatClientProtocol(ChatProtocol):
 
         if self.output:
             # Send data in this form to server
-            self.output.write(self.client + ":" + data)
+            self.output.write(
+                (self.client + ":" + data).encode('utf-8'))
 
 
 class StdioClientProtocol(ChatProtocol):
@@ -71,13 +74,13 @@ class StdioClientProtocol(ChatProtocol):
     def input_prompt(self):
         # Since the output is directly connected
         # to stdout, use that to write.
-        self.output.write(self.prompt)
+        self.output.write(self.prompt.encode('utf-8'))
 
     def processData(self, data):
         """ Process data received """
 
         if self.output:
-            self.output.write('\n' + data)
+            self.output.write(('\n' + data).encode('utf-8'))
             self.input_prompt()
 
 

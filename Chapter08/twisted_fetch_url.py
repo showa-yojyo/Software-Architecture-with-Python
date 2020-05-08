@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #5
-
 """
 
 A simple web client using Twisted
@@ -7,17 +7,20 @@ A simple web client using Twisted
 """
 
 # twisted_fetch_url.py
-from twisted.internet import reactor
-from twisted.web.client import getPage
 import sys
+# Twisted はイベント駆動型ネットワークエンジンをうたうフレームワーク。
+# https://twistedmatrix.com/trac/
+from twisted.internet import reactor
+from twisted.web.client import getPage # DeprecationWarning...
 
-
+# callback 1
 def save_page(page, filename='content.html'):
-    open(filename, 'w').write(page)
+    with open(filename, 'w') as f:
+        f.write(page)
     print('Length of data', len(page))
-    print('Data saved to', filename)
+    print(f'Data saved to {filename}')
 
-
+# callback 2
 def handle_error(error):
     print(error)
 
@@ -29,7 +32,7 @@ def finish_processing(value):
 
 if __name__ == "__main__":
     url = sys.argv[1]
-    deferred = getPage(url)
+    deferred = getPage(url.encode('utf-8'))
     deferred.addCallbacks(save_page, handle_error)
     deferred.addBoth(finish_processing)
 
