@@ -8,7 +8,7 @@ NOTE: The code is for illustrative purposes only and will not execute.
 
 """
 
-# import config
+#import config
 from redis import StrictRedis
 import hashlib
 import json, os
@@ -18,6 +18,7 @@ import itertools
 
 search_api = 'http://api.%s(site)/listings/search'
 
+# 存在しない
 def get_api_key(site):
     """ Return API key for a site """
 
@@ -27,15 +28,18 @@ def get_api_key(site):
 def unique_key(address, site):
     """ Return a unique key for the given arguments """
 
+    # hashlib.md5(X).hexdigest() を idiom として覚えること
     return hashlib.md5(''.join((address['name'],
                                address['street'],
                                address['city'],
                                site)).encode('utf-8')).hexdigest()
 
+# こういうのは標準にある。lru_cache() を factorial() のときに習った。
 def memoize(func, ttl=86400):
     """ A memory caching decorator """
 
     # Local redis as in-memory cache
+    # これが本コードのキモなのだが
     cache = StrictRedis(host='localhost', port=6379)
 
     def wrapper(*args, **kwargs):
@@ -43,8 +47,7 @@ def memoize(func, ttl=86400):
         # Construct a unique cache filename
         key = unique_key(args[0], args[1])
         # Check if its in redis
-        cached_data = cache.get(key)
-        if cached_data != None:
+        if cached_data :== cache.get(key):
             print('=>from cache<=')
             return json.loads(cached_data)
 
@@ -70,7 +73,8 @@ def filecache(func):
 
         # Else compute and write into file
         result = func(*args, **kwargs)
-        json.dump(result, open(filename,'w'))
+        with open(filename, 'w') as f:
+            json.dump(result, f)
 
         return result
 
@@ -113,7 +117,7 @@ def process_listings(listing, site):
 
 @memoize
 def func(address, site):
-    return [str(x).upper() for x in list(address.values())]
+    return [str(x).upper() for x in address.values()]
 
 
 if __name__ == "__main__":

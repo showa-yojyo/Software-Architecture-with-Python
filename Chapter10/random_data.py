@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #8
-
 """
 
 Generating random data for applications - Generates random patient data
@@ -19,20 +19,21 @@ class AgeType(IntType):
 
     def __init__(self, **kwargs):
         kwargs['default'] = 18
-        IntType.__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def to_primitive(self, value, context=None):
+        # 乱数を返すように見える
         return random.randrange(18, 80)
 
 class NameType(StringType):
     """ A schematics custom name type """
 
-    vowels='aeiou'
+    vowels = 'aeiou'
     consonants = ''.join(set(string.ascii_lowercase) - set(vowels))
 
     def __init__(self, **kwargs):
         kwargs['default'] = ''
-        StringType.__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def get_name(self):
         """ A random name generator which generates
@@ -46,7 +47,6 @@ class NameType(StringType):
         for i in (1, 3):
             items[i] = random.choice(self.vowels)
 
-
         return ''.join(items).capitalize()
 
     def to_primitive(self, value, context=None):
@@ -56,16 +56,16 @@ class GenderType(BaseType):
     """A gender type for schematics """
 
     def __init__(self, **kwargs):
-        kwargs['choices'] = ['male','female']
+        kwargs['choices'] = ['male', 'female']
         kwargs['default'] = 'male'
-        BaseType.__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
 class ConditionType(StringType):
     """ A gender type for a health condition """
 
     def __init__(self, **kwargs):
         kwargs['default'] = 'cardiac'
-        StringType.__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def to_primitive(self, value, context=None):
         return random.choice(('cardiac',
@@ -82,10 +82,13 @@ class BloodGroupType(StringType):
 
     def __init__(self, **kwargs):
         kwargs['default'] = 'AB+'
-        StringType.__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     def to_primitive(self, value, context=None):
-        return ''.join(random.choice(list(itertools.product(['AB','A','O','B'],['+','-']))))
+        # random.choice() は引数がシーケンスでなければならない。
+        return ''.join(random.choice(
+            list(itertools.product(
+                ('AB', 'A', 'O', 'B'), ('+', '-')))))
 
 
 class Patient(Model):
@@ -101,6 +104,5 @@ class Patient(Model):
     last_visit = DateTimeType(default='2000-01-01T13:30:30')
 
 if __name__ == "__main__":
-     patients = [Patient.get_mock_object().to_primitive() for x in range(100)]
-     for patient in patients:
+     for patient in (Patient.get_mock_object().to_primitive() for _ in range(100)):
          print(patient)
