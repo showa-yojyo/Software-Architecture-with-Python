@@ -11,6 +11,6 @@
 11. facade.py: Facade パターン コードの前半がゴチャゴチャしているのがミソ
 12. proxy.py: Proxy パターン
 13. iterator.py: Iterator パターン main の islice() も注目したい
-14. observer.py: Observer パターン。Publish/Subscribe と呼んでいる。マルチスレッド対応。
+14. observer.py: Observer パターン。Publisher/Subscribers と呼んでいる。マルチスレッド対応。
 15. observer_async.py: Observer パターンの非同期バージョン。
 16. state.py: State パターン。eval() を消す refactoring を考えたい。
