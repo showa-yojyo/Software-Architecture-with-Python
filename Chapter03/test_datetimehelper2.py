@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-# Code Listing #5 # unittest.mock.patch.object() の利用法
+# Code Listing #5
+# unittest.mock.patch.object() の利用法
 
 """ Module test_datetimehelper - Unit test module for testing datetimehelper module """
 

@@ -14,3 +14,18 @@
 14. palindrome2.py: 回文判定関数 空白考慮版
 15. test_palindrome3.py: テストコード
 16. palindrome3.py: 回文判定関数 空白・句読点考慮版
+
+# Chapter03 見どころ
+
+* `filename = hashlib.md5(url).hexdigest()` を利用して
+  インターネットからファイルをダウンロード済みなのかどうかを覚えていく技法。
+* `unittest.mock` の `patch()` の用例。
+  日付・時刻に関する機能の単体テストをしたいが、`today()` や `now()` が関係する。
+  テストを実行するタイミングで結果が異なりテストしづらい。
+  そこで、テスト対象メソッドが任意の値を返すように `patch.object()` を利用する。
+* `unittest.mock` の `Mock` および `MagicMock` の用例。
+  * `Mock` が使えるところは `MagicMock` が使えると思っていい。したがってふつうは後者のみを使う。
+  * 対象メソッドを上書きする場合と、対象メソッドの引数を上書きする場合がある。
+  * ここで使っている機能は
+    * `return_value`
+    * `assert_called_with()`

@@ -15,7 +15,8 @@ def get_url_data(url):
     # Save it in a filename
     # URL 文字列だけでファイル名を一貫性を保って決定する。
     filename = hashlib.md5(url).hexdigest()
-    open(filename, 'w').write(data)
+    with open(filename, 'wb') as f:
+        f.write(data)
     return data
 
 
@@ -25,8 +26,11 @@ def get_url_data_stub(url):
     # No actual web request is made, instead
     # the file is opened and data returned
     filename = hashlib.md5(url).hexdigest()
-    if os.path.isfile(filename):
-        return open(filename).read()
+    try:
+        with open(filename, 'rb') as f:
+            return f.read()
+    except OSError:
+        return None
 
 
 def get_url_data(url):
@@ -36,13 +40,17 @@ def get_url_data(url):
     # contents. Note that we are not checking for
     # age of the file - so content may be stale.
     filename = hashlib.md5(url).hexdigest()
-    if os.path.isfile(filename):
-        return open(filename).read()
+    try:
+        with open(filename, 'rb') as f:
+            return f.read()
+    except OSError:
+        pass
 
     # First time - so fetch the URL and write to the
     # file. In subsequent calls, the file contents will
     # be returned.
     data = requests.get(url).content
-    open(filename, 'w').write(data)
+    with open(filename, 'wb') as f:
+        f.write(data)
 
     return data
