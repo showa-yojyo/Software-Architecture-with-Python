@@ -27,9 +27,11 @@ def sort():
     print('Sorting...')
 
     with open('sorted_nums.txt', 'w') as fp:
+        # バケツソート的な着想
         for i in range(1, MAXINT+1):
             # '\n' が要るのがダサい
             text = str(i) + '\n'
+            # 単純に counter[text] でも動作するだろう
             if (count := counter.get(text, 0)) > 0:
                 fp.write(text * count)
 

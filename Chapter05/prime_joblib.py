@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #17
-
 """
 
 Primality checker using joblib
@@ -10,6 +10,7 @@ Primality checker using joblib
 from joblib import Parallel, delayed
 
 
+# いつもと同じ
 def is_prime(n):
     """ Check for input number primality """
 

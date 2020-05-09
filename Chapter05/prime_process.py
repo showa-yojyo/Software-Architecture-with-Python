@@ -13,7 +13,7 @@ $ time python3 prime_process.py > /dev/null
 import multiprocessing
 #from queue import Queue, Empty
 
-
+# ここは変更点なし
 def is_prime(n):
     """ Check for input number primality """
 

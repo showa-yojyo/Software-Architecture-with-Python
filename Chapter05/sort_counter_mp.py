@@ -15,7 +15,7 @@ from multiprocessing import Pool
 
 MAXINT = 100000
 
-
+# これは前回のバケツソートと同じ
 def sorter(filenames):
     """ Sorter process sorting files using a counter """
 

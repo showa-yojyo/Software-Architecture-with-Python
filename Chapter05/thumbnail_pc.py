@@ -1,11 +1,12 @@
+#!/usr/bin/env python
 # Code Listing #2
-
 """
 
 Thumbnail converter using producer-consumer architecture
 
 """
 
+from queue import Queue
 import threading
 import time
 import string
@@ -13,7 +14,6 @@ import random
 import urllib.request
 
 from PIL import Image
-from queue import Queue
 
 # Thread のサブクラスを二つ定義する。Generator と Consumer だ。
 
@@ -128,13 +128,17 @@ if __name__ == '__main__':
 
     # 以下は追加コード
 
+    time.sleep(5)
+
+    # Consumer スレッドをブロックしながら停止する
     for t in consumers:
         t.stop()
 
     # To make sure producers dont block on a full queue
     while not q.empty():
-        item = q.get()
+        _ = q.get()
 
+    # Producer スレッドをノンブロッキングで停止する
     for t in producers:
         t.stop()
         print('Stopped', t, flush=True)

@@ -46,9 +46,11 @@ class ThumbnailURLController(threading.Thread):
         while self.flag:
             rate = self.calc_rate()
             if rate < self.rate_limit:
+                # with Condition もまた acqure() & release() を意味する
                 with self.cond:
                     print('Notifying all...')
                     # cond.wait() しているスレッドを全て再開させる
+                    # この cond をすべての Generator が共有している
                     self.cond.notify_all()
 
         print('Controller quitting')
@@ -74,6 +76,7 @@ class ThumbnailURLController(threading.Thread):
             # Adjust threads sleep_time
             thread.sleep_time += sleep_diff
             # Hold this thread till rate settles down with a 5% error
+            # acquire() & release()
             with self.cond:
                 print('Controller, rate is high, sleep more by', rate, sleep_diff)
                 while self.calc_rate() > self.rate_limit:
@@ -189,6 +192,7 @@ class ThumbnailImageSemaSaver:
     def save(self, url):
         """ Save a URL as thumbnail """
 
+        # blocking=False を指定するので with が使えないということか？
         if self.acquire():
             self.thumbnail_image(url)
             return True

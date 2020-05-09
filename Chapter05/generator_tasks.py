@@ -7,12 +7,11 @@ Simple example of co-operative multitasking scheduler using generators
 """
 
 # generator_scheduler.py
-import random
+from contextlib import contextmanager
 import time
 import collections
-import threading
 
-
+# yield するだけでコルーチン呼ばわりできるか
 def number_generator(n):
     """ A co-routine that generates numbers in range 1..n """
 
@@ -61,9 +60,7 @@ def scheduler(tasks, runs=10000):
 
     return results
 
-
-from contextlib import contextmanager
-
+# 復習
 @contextmanager
 def timer():
     start = time.time()

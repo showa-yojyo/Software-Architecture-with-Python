@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #21
-
 """
 
 Main mandelbrot program using Celery as the distributed, concurrent task queue

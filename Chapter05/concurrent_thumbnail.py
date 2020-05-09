@@ -29,12 +29,9 @@ def thumbnail_image(filename, size=(64, 64), format='.png'):
                                       basename.rsplit('.')[0] + '_thumb.png')
         im.save(thumb_filename)
         print('Saved', thumb_filename)
-        return True
-
-    except Exception as e:
+    except Exception:
         print('Error converting file', filename)
         raise
-        return False
 
 
 def directory_walker(start_dir):
@@ -46,7 +43,7 @@ def directory_walker(start_dir):
             # Only process if its a type of image
             # mimetypes.guess_type は知らなかった
             file_type = mimetypes.guess_type(filename.lower())[0]
-            if file_type != None and file_type.startswith('image/'):
+            if file_type and file_type.startswith('image/'):
                 yield filename
 
 
@@ -63,7 +60,4 @@ if __name__ == '__main__':
         future_map = {executor.submit(
             thumbnail_image, filename): filename for filename in directory_walker(root_dir)}
         for future in as_completed(future_map):
-            num = future_map[future]
-            status = future.result()
-            if status:
-                print('Thumbnail of', future_map[future], 'saved')
+            print('Thumbnail of', future_map[future], 'saved')

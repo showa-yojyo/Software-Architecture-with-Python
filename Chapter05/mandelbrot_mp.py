@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #19
-
 """
 
 Mandelbrot fractal generator - concurrent version using PyMP (using shared memory)
@@ -7,12 +7,14 @@ Mandelbrot fractal generator - concurrent version using PyMP (using shared memor
 """
 
 # mandelbrot_mp.py
-import sys
+import argparse
+from multiprocessing import freeze_support
 from PIL import Image
 import pymp # pip install pymp-pypi
-import argparse
+from pymp.shared import dict as pympdict # ここで RuntimeError
 
 
+# いつもと同じ
 def mandelbrot_calc_row(y, w, h, image_rows, max_iteration=1000):
     """ Calculate one row of the mandelbrot set with size wxh """
 
@@ -37,7 +39,7 @@ def mandelbrot_calc_set(w, h, max_iteration=10000, output='mandelbrot_mp.png'):
 
     image = Image.new("RGB", (w, h))
     # 特殊な記憶空間
-    image_rows = pymp.shared.dict()
+    image_rows = pympdict()
 
     # さらに平行化
     with pymp.Parallel(4) as p:
@@ -53,6 +55,7 @@ def mandelbrot_calc_set(w, h, max_iteration=10000, output='mandelbrot_mp.png'):
 
 
 if __name__ == "__main__":
+    freeze_support() # 動かない
     parser = argparse.ArgumentParser(
         prog='mandelbrot', description='Mandelbrot fractal generator (parallel version)')
     parser.add_argument(
@@ -66,6 +69,5 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     print('Creating mandelbrot set with size %(width)sx%(height)s, #iterations=%(niter)s' % args.__dict__)
-    #pymp.freeze_support() # 動かない
     mandelbrot_calc_set(args.width, args.height,
                         max_iteration=args.niter, output=args.output)

@@ -22,3 +22,39 @@
 22. uwsgi.conf: ????
 
 The file requirements.txt contains the pip requirements for software in this chapter.
+
+# 見どころ
+
+* https://dummyimage.com/ はダミーイメージ生成サービス
+* 標準モジュール `threading` の基本的な機能の実演
+  * 基本形は `Thread` を生成して `.start()` する。
+  * Producer/Consumer パターン
+  * `Lock`
+  * `BoundedSemaphore`
+  * `Condition`
+* `queue.Queue` の実演
+* 標準モジュール `multiprocessing` の基本的な機能の実演
+  * 基本形は `Pool` を `with` で囲んで `.map()` する。
+* ソート再び
+  * `collections.defaultdict` でバケツソートを実装する。
+  * `multiprocessing.Pool` を応用したマージソート？
+* 基本モジュール `asyncio`
+  * 基本的関数、`Future`, `Task` の実演
+  * `yield from` の例（ここのは面白くない）
+  * `async def` と `await` の実演
+* サードパーティー製 `aiohttp` の実演
+  * ブロックなしに HTTP Get ができる。
+  * `async with` 文あり。セッション定義と HTTP Get の処理。
+* `concurrent.futures.Executor`
+  * `ThreadPoolExecutor` と `.submit()` だけの基本形
+  * `ProcessPoolExecutor`
+* `os.walk()`
+* `mimetypes.guess_type()`
+* サードパーティー製 `joblib` の実演
+  * `Parallel(n)(delayed(callback)(i) for i in data)` が基本形
+* サードパーティー製 `pymp` の実演
+  * `pymp.shared.dict()`
+  * `with pymp.Parallel(n) as p:` の後に `p.range()` という方式がある。
+  * 動かない。
+* サードパーティー製 `Celery` コード例
+  * モジュールを見ると Redis がどうのとあるので特殊な使い方をするらしいことがわかる。

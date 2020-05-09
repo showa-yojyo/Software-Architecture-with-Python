@@ -176,7 +176,7 @@ if __name__ == '__main__':
 
     # To make sure producers dont block on a full queue
     while not q.empty():
-        item = q.get()
+        _ = q.get()
 
     for t in producers:
         t.stop()

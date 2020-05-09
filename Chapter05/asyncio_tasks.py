@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #12
-
 """
 
 Example of co-operative multitasking using asyncio
@@ -59,8 +59,11 @@ def print_result(future):
     print('Result=>', future.result())
 
 
+# この非同期処理は基本形。挙動が予測しやすい。
 async def main():
-    future = asyncio.gather(prime_filter(10, 50), square_mapper(10, 50))
+    m, n = 10, 50
+    future = asyncio.gather(
+        prime_filter(m, n), square_mapper(m, n))
     future.add_done_callback(print_result)
     await future
 
