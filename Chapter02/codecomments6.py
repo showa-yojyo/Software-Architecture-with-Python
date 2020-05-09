@@ -3,7 +3,7 @@
 # Python 3.8 なら math.dist(varray) でいいだろう。
 
 
-def rms(varray=[]):
+def rms(varray):
     """ Root mean squared velocity. Returns
     square root of sum of squares of velocities """
 

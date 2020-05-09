@@ -4,36 +4,9 @@
 
 # Note: This is urlrank.py rewritten to use rankbase so called urlrank2.py
 
-import requests
 import operator
-
+import requests
 from rankbase import RankBase
-
-
-class UrlRank:
-    """ Accept URLs as inputs and rank them in
-    terms of how much a word occurs in them """
-
-    def __init__(self, word, *urls):
-        self.word = word.strip().lower()
-        self.urls = urls
-
-    def rank(self):
-        """ Rank the URLs. A tuple is returned with
-        (url, #occur) in decreasing order of
-        occurences """
-
-        occurs = []
-
-        for url in self.urls:
-            data = requests.get(url).content
-            words = [x.lower().strip() for x in data.split()]
-            # Filter empty words
-            count = words.count(self.word)
-            occurs.append((url, count))
-
-        # Return in sorted order
-        return sorted(occurs, key=operator.itemgetter(1), reverse=True)
 
 
 class UrlRank(RankBase):
@@ -41,16 +14,17 @@ class UrlRank(RankBase):
     terms of how much a word occurs in them """
 
     def __init__(self, word, *urls):
-        self.word = word.strip().lower()
+        super().__init__(word)
         self.urls = urls
 
+    # これもオーバーライドではなくなっている
     def rank(self):
         """ Rank the URLs. A tuple is returned with
         (url, #occur) in decreasing order of
         occurences """
 
         texts = [requests.get(x).content for x in self.urls]
-        occurs = super(UrlRank, self).rank(*texts)
+        occurs = super().rank(*texts)
         # Convert to URLs list
         occurs = [(self.urls[x], y) for x, y in occurs.items()]
 

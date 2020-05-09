@@ -19,7 +19,7 @@ def common(string1, string2):
     s2 = set(string2.lower().split())
     return s1.intersection(s2)
 
-
+# 文字列バージョン
 def common_words(text1, text2):
     """ Return common words across text1 and text2 """
 

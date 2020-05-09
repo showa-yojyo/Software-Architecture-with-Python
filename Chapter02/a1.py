@@ -7,7 +7,7 @@
 
 def squares(narray):
     """ Return array of squares of numbers """
-    return pow_n(array, 2)
+    return pow_n(narray, 2)
 
 
 def cubes(narray):

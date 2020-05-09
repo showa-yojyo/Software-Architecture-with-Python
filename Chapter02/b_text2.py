@@ -6,7 +6,7 @@
 
 import a_text2 as a
 
-
+# ファイルバージョン
 def common_words(filename1, filename2):
     """ Return common words across two input files """
 

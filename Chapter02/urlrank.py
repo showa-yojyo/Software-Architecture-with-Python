@@ -24,7 +24,7 @@ class UrlRank:
         for url in self.urls:
             # この次の行しか textrank.py との違いはなかった。
             data = requests.get(url).content
-            words = map(lambda x: x.lower().strip(), data.split())
+            words = [x.lower().strip() for x in data.split()]
             # Filter empty words
             count = words.count(self.word)
             occurs.append((url, count))

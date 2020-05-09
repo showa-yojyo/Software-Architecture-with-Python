@@ -17,7 +17,7 @@ while count < ntries:
         # sleep 1 second every time
         time.sleep(1)
 
-    if result == None:
+    if not result:
         print("Error, could not fetch URL", url)
         # Return a tuple of (<return code>, <lasterror>)
         return (2, error)

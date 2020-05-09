@@ -1,5 +1,8 @@
 # Code listing #6
 
+import time
+import requests
+
 
 class UrlFetcher:
     """ Implements the steps of fetching a URL.
@@ -19,10 +22,10 @@ class UrlFetcher:
         """
         self.url = url
         self.timeout = timeout
-        self.ntries = retries
+        self.ntries = ntries
         self.headers = headers
         # Enapsulated result object
-        self.result = result
+        self.result = None
 
     def fetch(self):
         """ Fetch the URL and save the result """
@@ -36,19 +39,19 @@ class UrlFetcher:
                 result = requests.get(self.url,
                                       timeout=self.timeout,
                                       headers=self.headers)
-            except Exception as error:
+            except requests.RequestException as error:
                 print('Caught exception', error, 'trying again after a while')
                 # increment count
                 count += 1
                 # sleep 1 second every time
                 time.sleep(1)
 
-        if result != None:
+        if not result:
             # Save result
             self.result = result
 
     def get(self):
         """ Return the data for the URL """
 
-        if self.result != None:
+        if self.result:
             return self.result.content

@@ -28,8 +28,7 @@ def variance(array):
     # Square of variation from mean
     avg = mean(array)
     array_d = [(x - avg) for x in array]
-    variance = sum(a.squares(array_d))
-    return variance
+    return sum(a.squares(array_d))
 
 
 def standard_deviation(array):

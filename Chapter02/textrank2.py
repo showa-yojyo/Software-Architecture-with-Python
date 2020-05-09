@@ -4,35 +4,7 @@
 
 # Note: This is textrank.py rewritten to use rankbase, so called textrank2.py
 
-import operator
 from rankbase import RankBase
-
-
-class TextRank:
-    """ Accept text files as inputs and rank them in
-    terms of how much a word occurs in them """
-
-    def __init__(self, word, *filenames):
-        self.word = word.strip().lower()
-        self.filenames = filenames
-
-    def rank(self):
-        """ Rank the files. A tuple is returned with
-        (filename, #occur) in decreasing order of
-        occurences """
-
-        occurs = []
-
-        for fpath in self.filenames:
-            with open(fpath) as f:
-                data = f.read()
-            words = [x.lower().strip() for x in data.split()]
-            # Filter empty words
-            count = words.count(self.word)
-            occurs.append((fpath, count))
-
-        # Return in sorted order
-        return sorted(occurs, key=operator.itemgetter(1), reverse=True)
 
 
 class TextRank(RankBase):
@@ -40,9 +12,10 @@ class TextRank(RankBase):
     terms of how much a word occurs in them """
 
     def __init__(self, word, *filenames):
-        self.word = word.strip().lower()
+        super().__init__(word)
         self.filenames = filenames
 
+    # XXX: オーバーライドのようでそうでない。
     def rank(self):
         """ Rank the files. A tuple is returned with
         (filename, #occur) in decreasing order of
@@ -50,7 +23,7 @@ class TextRank(RankBase):
 
         texts = []
         for filename in self.filenames:
-            with open(filename) as fp:
+            with open(filename, encoding='utf-8') as fp:
                 texts.extend(fp.read())
         occurs = super().rank(*texts)
         # Convert to filename list

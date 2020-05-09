@@ -1,5 +1,7 @@
 # Code listing #4
 
+import time
+import requests
 
 def fetch_url(url, ntries=3, timeout=30):
     " Fetch a given url and return its contents"
@@ -12,14 +14,14 @@ def fetch_url(url, ntries=3, timeout=30):
     while count < ntries:
         try:
             result = requests.get(url, timeout=timeout)
-        except Exception as error:
+        except requests.RequestException as error:
             print('Caught exception', error, 'trying again after a while')
             # increment count
             count += 1
             # sleep 1 second every time
             time.sleep(1)
 
-    if result == None:
+    if not result:
         print("Error, could not fetch URL", url)
         # Return a tuple of (<return code>, <lasterror>)
         return (2, error)

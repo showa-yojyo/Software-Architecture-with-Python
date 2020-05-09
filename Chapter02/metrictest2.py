@@ -10,8 +10,7 @@ This is a mix of different functions and classes doing different things.
 
 # Note: This version is written for testing with pyflakes and called metrictest2.py
 
-import sys
-
+import random
 
 def fn(x, y):
     """ A function which performs a sum """

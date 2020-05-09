@@ -14,7 +14,7 @@
 14. b_text.py: 略
 15. a_text2.py: 略
 16. b_text2.py: 略
-17. textrank.py: sort() の練習
+17. textrank.py: sort() の練習＋可変長引数
 18. urlrank.py: sort() の練習
 19. rankbase.py: sort() の練習
 20. textrank2.py: sort() の練習
@@ -26,5 +26,3 @@
 26. metrictest_fix1.py: 不明
 27. metrictest_fix2.py: 不明
 28. metrictest.py: 不明
-
-

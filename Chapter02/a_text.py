@@ -13,7 +13,7 @@ def ntimes(string, char):
 
     return string.count(char)
 
-
+# 文字列バージョン
 def common_words(text1, text2):
     """ Return common words across text1 and text2 """
 
