@@ -57,4 +57,4 @@ class Prime:
 
 
 if __name__ == "__main__":
-    l = list(Prime(1000))
+    list(Prime(1000))

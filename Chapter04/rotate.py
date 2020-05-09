@@ -10,15 +10,22 @@ from collections import deque
 
 
 def rotate_seq1(seq1, n):
-    """ Rotate a sequence left by n """
-    # E.g: rotate([1,2,3,4,5], 2) => [4,5,1,2,3]
+    """ Rotate a sequence left by n
+
+    >>> rotate_seq1([1, 2, 3, 4, 5], 2)
+    [4, 5, 1, 2, 3]
+    """
 
     k = len(seq1) - n
     return seq1[k:] + seq1[:k]
 
 
 def rotate_seq2(seq1, n):
-    """ Rotate a sequence left by n using deque """
+    """ Rotate a sequence left by n using deque
+
+    >>> rotate_seq2([1, 2, 3, 4, 5], 2)
+    deque([4, 5, 1, 2, 3])
+    """
 
     d = deque(seq1)
     d.rotate(n)

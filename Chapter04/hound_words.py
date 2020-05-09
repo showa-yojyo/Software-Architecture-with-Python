@@ -11,7 +11,9 @@ import operator
 from collections import defaultdict, Counter
 
 print('Using defaultdict')
+# requests.get(url).text でテキストを直接得る。
 text = requests.get('https://www.gutenberg.org/files/2852/2852-0.txt').text
+# 頻度を集計する。
 freq = defaultdict(int)
 
 for word in text.split():

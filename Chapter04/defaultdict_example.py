@@ -16,10 +16,9 @@ word = "Python"
 # Implementations with simple dictionary
 for word in text.split():
     word = word.lower().strip()
-    # 次の更新処理はいかにもダメだ。
-    try:
+    if word in counts:
         counts[word] += 1
-    except KeyError:
+    else:
         counts[word] = 1
 
 print(f"Counts of word {word} => {counts[word]}")

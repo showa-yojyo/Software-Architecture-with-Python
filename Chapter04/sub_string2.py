@@ -7,9 +7,9 @@ Version with pympler memory usage detection.
 
 """
 
-from pympler import asizeof
 import random
 import string
+from pympler import asizeof
 
 seq1, seq2 = [], []
 
@@ -27,12 +27,15 @@ def random_strings(n, N):
 
 
 def slices(s, n):
-    return list(map(''.join, list(zip(*(s[i:] for i in range(n))))))
+    """Return all substrings in a string `s` with their length `n`.
+
+    >>> slices('famicon', 3)
+    ['fam', 'ami', 'mic', 'ico', 'con']
+    """
+    return [''.join(j) for j in zip(*(s[i:] for i in range(n)))]
 
 # Uncomment for profiling with line or memory profiler
-# @profile
-
-
+#@profile
 def sub_string(seq1, seq2):
     """ Return sub-strings from seq2 which are part of strings in seq1
     - Optimized version
@@ -47,8 +50,8 @@ def sub_string(seq1, seq2):
     sequences = {}
 
     for i in range(min_l, max_l+1):
-        for string in seq1:
-            sequences.update({}.fromkeys(slices(string, i)))
+        for j in seq1:
+            sequences.update({}.fromkeys(slices(j, i)))
 
     subs = []
     for item in seq2:
@@ -73,11 +76,11 @@ def sub_string_brute(seq1, seq2):
 
 def test(N):
     random_strings(10, N)
-    subs = sub_string(seq1, seq2)
+    return sub_string(seq1, seq2)
 
 
 def test2():
-    subs = sub_string(seq1, seq2)
+    return sub_string(seq1, seq2)
 
 
 if __name__ == "__main__":
@@ -87,4 +90,5 @@ if __name__ == "__main__":
     test(10000)
     all_objects = muppy.get_objects()
     sum1 = summary.summarize(all_objects)
+    # 全オブジェクトの消費メモリを降順にリストする
     summary.print_(sum1)

@@ -8,7 +8,26 @@
 8. sub_string2.py: プロファイルング メモリ pympler
 9. defaultdict_example.py: defaultdict 実演
 10. ordered.py: collections.OrderedDict 実演
-11. hound_words.py: collections.Counter 実演
+11. hound_words.py: collections.Counter 実演。圧倒的に高速。
 12. chainmap_example.py: collections.ChainMap 実演
 13. named.py: collections.namedtuple 実演。_replace() は知らなんだ
 14. bloomtest.py: pybloom 実演だが動かない。
+Extra ビッグオー記法のよく出るオーダーをグラフにしたもの
+
+# 見どころ
+
+* `contextlib.contextmanager` を用いた実行時間測定ブロックの実装例。
+* Iterator の実装例。
+* メモリプロファイリングの実演コード。
+  * `line_profiler`
+  * `objgraph`: Graphviz がインストールされていないと単に dot ファイルを生成する。これもアリ。
+    オンラインのビューワーでグラフを描画すればいい。SVG で手に入る。
+* `deque.rotate()` は左シフトを実現する。
+* メモリプロファイラー `pympler` の実演。
+  * 文字列と辞書だけで 6 MB 超え。
+* `collections`
+  * `defaultdict`
+  * `Counter`
+  * `ChainMap` は辞書を複数ゆるく結合するものなのか。
+  * `namedtuple`
+* Python 3 ではどうしても動かない `pybloom`

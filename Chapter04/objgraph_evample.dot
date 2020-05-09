@@ -1,0 +1,27 @@
+digraph ObjectGraph {
+  node[shape=box, style=filled, fillcolor=white];
+  o2637964347760[fontcolor=red];
+  o2637964347760[label="MyRefClass\n<__main__.MyRefClass object at 0x0000026"];
+  o2637964347760[fillcolor="0,0,1"];
+  o2637963169152 -> o2637964347760 [label="ref",weight=2];
+  o2637964411840 -> o2637964347760 [label="ref",weight=2];
+  too_many_o2637964347760->o2637964347760[color=red,style=dotted,len=0.25,weight=10];
+  too_many_o2637964347760[label="99 more backreferences",shape=box,height=0.25,color=red,fillcolor="0,1,0.65",fontsize=6];
+  too_many_o2637964347760[fontcolor=white];
+  o2637963169152[label="dict\n16 items"];
+  o2637963169152[fillcolor="0,0,0.65"];
+  o2637964341952 -> o2637963169152 [label="__dict__",weight=10];
+  o2637971355968 -> o2637963169152 [label="curframe_locals",weight=2];
+  o2637964411840[label="dict\n1 items"];
+  o2637964411840[fillcolor="0,0,0.65"];
+  o2637964246992 -> o2637964411840 [label="__dict__",weight=10];
+  o2637964341952[label="module\n__main__"];
+  o2637964341952[fillcolor="0.3,1,0.3"];
+  o2637964341952[fontcolor=white];
+  o2637971355968[label="dict\n33 items"];
+  o2637971355968[fillcolor="0,0,0.3"];
+  o2637971355968[fontcolor=white];
+  o2637964246992[label="C\n<__main__.C object at 0x0000026632EBFFD0"];
+  o2637964246992[fillcolor="0,0,0.3"];
+  o2637964246992[fontcolor=white];
+}

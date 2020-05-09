@@ -66,8 +66,8 @@ def test(n, func):
     a1 = random.sample(range(0, stop), n)
     a2 = random.sample(range(0, stop), n)
 
-    with timer() as t:
-        result = func(a1, a2)
+    with timer():
+        func(a1, a2)
 
 
 def test_():
@@ -75,7 +75,7 @@ def test_():
 
     # With additional sleep
     sleep(0.01)
-    common = common_items(a1, a2)
+    common = common_items(a1, a2) # v1 or v2
 
 
 if __name__ == "__main__":
