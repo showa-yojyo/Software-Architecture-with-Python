@@ -11,14 +11,34 @@
 11. pipe_words_gen.py: 標準のみ。ジェネレーターでパイプライン処理を実装する。
 12. pipe_recent_gen.py: 標準のみ。最終更新ファイルを表示。os.popen(), os.system() など。
 
+# 見どころ
+
 主題はネットワークプログラミング、プロセス間通信だ。
 
-[The Web framework for perfectionists with deadlines | Django](https://www.djangoproject.com/)
-[ソケットプログラミング HOWTO — Python 3.8.3rc1 ドキュメント](https://docs.python.org/ja/3/howto/sockets.html)
-[Twisted](https://twistedmatrix.com/trac/)
-[Eventlet Networking Library](https://eventlet.net/)
-[What is gevent? — gevent 20.5.1.dev0 documentation](http://www.gevent.org/)
+* サードパーティー製パッケージ Django
+  * ウェブアプリのフレームワーク
+  * `models.Model` のサブクラスはデータベースのテーブルを設計するもの？
+  * `ForeignKey` の引数 `on_delete` を指定していないので動かない。
+  * `__unicode__()` は Python 3 でも存在する？
+* 標準のソケットモジュールの実演
+* サードパーティー製パッケージ Twisted
+  * 実演コードが古くなってしまってモジュール `reactor` 系は使えない。
+* サードパーティー製パッケージ Eventlet
+  * `eventlet.green.socket.error` が見えないところに存在する
+* サードパーティー製パッケージ gevent
+  * インポートの直後に `monky.patch_all()` というのがある。これがすべて。
+* 標準 `multiprocessing` の `Process` と `Pipe` の実演
+* 標準 `os.popen()` の実演
+  * 代わりに `subprocess.check_output()` を使う
 
-* 有名どころのパッケージは初心者向けガイドくらいはやっておく。
-* ソケットプログラミングは相変わらず掴みどころがわからない。
-* os.popen() は subprocess.Popen() のラッパーなので書き換える。
+# 関連資料
+
+* [The Web framework for perfectionists with deadlines | Django](https://www.djangoproject.com/)
+* [ソケットプログラミング HOWTO — Python 3.8.3rc1 ドキュメント](https://docs.python.org/ja/3/howto/sockets.html)
+  * ソケットプログラミングは相変わらず掴みどころがわからない。
+* [Twisted](https://twistedmatrix.com/trac/)
+* [Eventlet Networking Library](https://eventlet.net/)
+* [What is gevent? — gevent 20.5.1.dev0 documentation](http://www.gevent.org/)
+
+有名どころのパッケージは初心者向けガイドくらいはやっておく。
+`os.popen()` は `subprocess.Popen()` のラッパーなので書き換える。

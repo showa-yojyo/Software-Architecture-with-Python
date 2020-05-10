@@ -10,11 +10,11 @@ Multi chat server using gevent
 
 # gevent はコルーチンベースのネットワークライブラリーとある
 # http://www.gevent.org/
-import gevent
 from gevent import monkey
 from gevent import socket
 from gevent.server import StreamServer
 
+# これが急所中の急所
 monkey.patch_all()
 
 participants = set()
