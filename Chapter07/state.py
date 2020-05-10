@@ -40,6 +40,7 @@ class ComputerState:
         """ Set a state """
 
         if self.index < len(self.next_states):
+            # 合法な状態遷移
             if state in self.next_states:
                 # Set index
                 self.index = self.next_states.index(state)
@@ -47,11 +48,11 @@ class ComputerState:
                 return self.__class__
             else:
                 # Raise an exception for invalid state change
-                current = self.__class__
-                new = eval(state) # 刺激的なコード
+                current = self.__class__.__name__
                 raise IllegalStateTransition(
-                    'Illegal transition from %s to %s' % (current, new))
+                    'Illegal transition from %s to %s' % (current, state))
         else:
+            # ランダムに状態を決めることにする
             self.index = 0
             if state in self.random_states:
                 self.__class__ = eval(state) # 刺激的なコード
@@ -81,6 +82,7 @@ class ComputerState:
 
 # 以下 ConcreteState クラス群。
 # クラス変数に注意（オブジェクト化しないで利用することがわかる）
+# 文字列でクラス名を取り扱和ざるを得ない。
 
 class ComputerOff(ComputerState):
     next_states = ['ComputerOn']
@@ -143,5 +145,5 @@ if __name__ == "__main__":
     print(c.change('ComputerOff'))
     print(c.change('ComputerOn'))
     print(c.change('ComputerSuspend'))
-    # Will rais an exception!
+    # Will raise an exception!
     print(c.change('ComputerHibernate'))

@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #14
-
 """
 
 Example of publish subscribe
@@ -51,16 +51,31 @@ class Alarm(threading.Thread):
 class DumbClock:
     """ A dumb clock class using an Alarm object """
 
-    def __init__(self):
+    def __init__(self, name):
         # Start time
         self.current = time.time()
+        self.name = name
 
     def update(self, *args):
         """ Callback method from publisher """
 
         self.current += args[0]
+        print(self)
 
     def __str__(self):
         """ Display local time """
 
-        return datetime.fromtimestamp(self.current).strftime('%H:%M:%S')
+        return f'{self.name} {datetime.fromtimestamp(self.current):%H:%M:%S}'
+
+def main():
+    publisher = Alarm()
+    publisher.register(DumbClock("1"))
+    publisher.register(DumbClock("2"))
+    publisher.register(DumbClock("3"))
+    publisher.start()
+
+    time.sleep(3)
+    publisher.stop()
+
+if __name__ == "__main__":
+    main()

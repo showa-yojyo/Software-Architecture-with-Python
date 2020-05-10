@@ -14,3 +14,23 @@
 14. observer.py: Observer パターン。Publisher/Subscribers と呼んでいる。マルチスレッド対応。
 15. observer_async.py: Observer パターンの非同期バージョン。
 16. state.py: State パターン。eval() を消す refactoring を考えたい。
+
+# 見どころ
+
+* Singleton パターンと発想を変えた Borg パターン
+  * 再利用可能な基底クラスたち。どちらのやり方でも派生クラスが定義できるというのが大きい。
+  * Singleton かどうかをテストするコード
+  * `type` からクラスを派生させるときの流儀
+  * `__new__()` だけをオーバーライドするので十分
+  * `__dict__` のクラス変数化による状態共有術。
+* コピーを徹底的に研究した Prototype パターン
+  * `copy.deepcopy()` が基本
+  * Prototype の factory を導入してコピー可能なオブジェクトを限定する。
+  * このコードは「同じ」が微妙な概念であることを教えてくれる。
+* マルチスレッド版 Observer パターン
+  * Publisher 側が `Thread` で Subscriber 側はその必要がない。
+* 非同期版 Observer パターン
+* `eval()` ベースの State パターン
+  * 合法な状態遷移を宣言するというのが急所。
+  * `eval()` がある理由は State サブクラスをそのままリストに入れることができないからか。
+  *

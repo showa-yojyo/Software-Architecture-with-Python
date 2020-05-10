@@ -85,6 +85,7 @@ class NewsSubscriber:
         url = data
         # We return the response immediately
         print('Fetching URL', url, '...')
+        # aiohttp.request() はふつう async with 文で実行する。
         future = aiohttp.request('GET', url)
         self.futures.append(future)
 
@@ -98,10 +99,10 @@ class NewsSubscriber:
                 if self.future_status.get(future):
                     continue
 
-                response = await future
-
-                # Read data
-                data = await response.read()
+                # async with をようやくここで書く
+                async with future as response:
+                    # Read data
+                    data = await response.read()
 
                 print('\t', self, 'Got data for URL',
                       response.url, 'length:', len(data))
@@ -111,8 +112,7 @@ class NewsSubscriber:
 
             await asyncio.sleep(2.0)
 
-
-if __name__ == "__main__":
+async def main():
     publisher = NewsPublisher()
     # Append some stories
     publisher.add_news(
@@ -130,12 +130,13 @@ if __name__ == "__main__":
     publisher.register(subscriber2, 'india')
     # subscriber.start()
 
-    loop = asyncio.get_event_loop()
-
     tasks = [x.fetch_urls() for x in (subscriber1, subscriber2)]
-    loop.run_until_complete(asyncio.wait(
-        [publisher.notify(), *tasks], timeout=120))
-
+    done, pending = await asyncio.wait(
+        [publisher.notify(), *tasks], timeout=10)
+    for task in pending:
+        task.cancel()
+    publisher.stop()
     print('Ending loop')
-    loop.close()
 
+if __name__ == "__main__":
+    asyncio.run(main())

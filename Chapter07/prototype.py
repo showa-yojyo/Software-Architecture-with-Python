@@ -146,7 +146,7 @@ if __name__ == "__main__":
     r2 = r1.clone()
     print(r1) # Register object at xxxxx
     print(r2) # Register object at yyyyy
-    print(r1 == r2) # False
+    print(r1 == r2) # 値は同じだが False
 
     r1 = SRegister(names=['amy', 'stu', 'jack'])
     r2 = r1.clone()
