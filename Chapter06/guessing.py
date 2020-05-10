@@ -24,6 +24,7 @@ def game():
     if value == random.randrange(1, 10):
         print("You won!")
     else:
+        # input() の返り値は str オブジェクトにつきここにしか来ない
         print("Try again")
 
 

@@ -13,3 +13,28 @@
 13. print_employee.py: Python の %s とかは危険である
 14. compare_passwords.py: getpass, hashlib.sha1() の hexdigest() は覚えておく
 15. crytpo_password_compare.py: PassLib 利用
+
+# 見どころ
+
+* 組み込み関数 `input()` の基本的な使い方。本質はオブジェクトの型変換とは何かということになる。
+  * Python 2.x 時代の `input()` は insecure だったという話だと思われる。
+    内部で `eval()` が動いていたからなので、具体的には次の議論で明らかになる。
+* 組み込み関数 `eval()` は仕様上かんたんに security hole になる。
+  * `global` 引数で組み込み関数の評価を制限・無効化できる。
+  * 組み込み関数 `__import__()` を覚えておくこと。これで `os` をインポートして
+    `rm -rf /` を実行することができる。
+* `OverflowError` は問題点がわからない。
+* ウェブアプリにおける SSTI と総称される seculity hole 各種
+  * ブラウザーのアドレス欄に `?{{ code }}` を加えると画面に `code` が評価されて出力されるというのが基本形。
+    `subprocess.Popen()` されたらひとたまりもない。
+  * これには対策がある。文字列テンプレートを可能な限り使い倒してユーザーの生の入力文字列を使わないことだ。
+  * CPU に高負荷を与える演算をさせれば DOS 攻撃になる。
+  * ダイアログボックスを表示し続けるような JavaScript を書き込めば XSS 攻撃。
+* 標準モジュール `getpass`, `sqlite3`
+  * `getpass.getpass('Password: ')` で事足りる。
+  * SQL 文を組み立てるのに %s を使ってはならない。
+  * パスワードをハッシュ化したものを比較して、その結果をそのまま採用する。
+    生の文字列同士を比較することはしない。なんならハッシュをデータベースに格納しておく。
+* サードパーティー製パッケージ `passlib`
+  * `passlib.hash.bcrypt.encrypt()` と `passlib.hash.bcrypt.verify()` の実演
+  * このパッケージにはハッシュ化アルゴリズムが 30 種類はある。

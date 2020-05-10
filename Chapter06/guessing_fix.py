@@ -21,6 +21,7 @@ def game():
     value = input("Please enter your guess (between 1 and 10): ")
 
     try:
+        # str オブジェクトを int オブジェクトに変換する
         value = int(value)
     except ValueError:
         print('Wrong type entered, try again', value)
@@ -28,6 +29,7 @@ def game():
 
     print("Entered value is", value)
     if value == random.randrange(1, 10):
+        # 今度は運が良ければ 1/10 の確率で勝てる
         print("You won!")
     else:
         print("Try again")

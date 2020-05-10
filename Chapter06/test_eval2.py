@@ -14,6 +14,7 @@ def run_code(string):
 
     try:
         # Pass __builtins__ dictionary as empty
+        # これにより __import__() が死ぬ。
         eval(string, {'__builtins__': {}})
     except Exception as e:
         print(repr(e))

@@ -1,5 +1,5 @@
+#!/usr/bin/env python
 # Code Listing #15
-
 """
 
 Compare passwords using crytpographic hashing using salts
@@ -20,7 +20,8 @@ def read_passwords():
     cursor = db.cursor()
     hashes = {}
 
-    for user, passwd in cursor.execute("select user,password from passwds"):
+    for user, passwd in cursor.execute(
+        "select user, password from passwds"):
         hashes[user] = bcrypt.encrypt(passwd, rounds=8)
 
     return hashes
@@ -29,6 +30,7 @@ def read_passwords():
 def verify_password(user):
     """ Verify password for user """
 
+    # なぜか全件読み込み
     passwds = read_passwords()
     # get the cipher
     cipher = passwds.get(user)
