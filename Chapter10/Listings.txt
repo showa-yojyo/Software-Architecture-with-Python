@@ -1,25 +1,22 @@
 1. maxsubarray.py: 部分列の定義に問題がある（文字列と部分文字列との関係になっていない）
 2. maxsubarray_v2.py: 部分列をスライスで解決する
 3. maxsubarray_v3.py: 最大値を取る部分列も得る
-4. maxsubarray_v4.py: NumPy 投入も
+4. maxsubarray_v4.py:
 5. word_searcher.py: grep 処理
 6. external_api.py: これは意味がわからない
 7. mocking_data.py: 詰め合わせ
 8. random_data.py: データ整合性をテストするのが目的？
 9. custom_logger.py: ログ
 
-1. から 4. のテーマはリストのスライス？
+# 見どころ
 
-5. は (f)grep を実装するもの。これは見ることころがない。
+* サードパーティー製パッケージ Redis
+* サードパーティー製パッケージ Schematic
+  * 妥当性テスト
+  * 直列化機能
+* 標準モジュール `logging`
 
-6. は説明用コードだ。実行不能。意味も不明。
-
-7. はキャッシュ
-
-8. 妥当性テスト機能付き・直列化機能付き構造体
-
-9. ログ出力
+# 関連
 
 * [redis · PyPI](https://pypi.org/project/redis/)
 * [Schematics — Schematics 2.1.0 documentation](https://schematics.readthedocs.io/en/latest/)
-

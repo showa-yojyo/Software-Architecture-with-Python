@@ -47,7 +47,7 @@ def memoize(func, ttl=86400):
         # Construct a unique cache filename
         key = unique_key(args[0], args[1])
         # Check if its in redis
-        if cached_data :== cache.get(key):
+        if cached_data := cache.get(key):
             print('=>from cache<=')
             return json.loads(cached_data)
 

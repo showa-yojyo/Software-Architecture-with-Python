@@ -66,6 +66,8 @@ class LoggerWrapper:
                 '%(asctime)s [%(timespent)s]: %(levelname)-8s - %(message)s',
                 datefmt='%Y-%m-%d %H:%M:%S')
             handle.setFormatter(formatter)
+
+        # 実行中にメソッドを追加する
         for name in ('debug', 'info', 'warning', 'error', 'critical'):
             # Creating convenient wrappers by using functools
             func = partial(self._dolog, name)
