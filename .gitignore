@@ -72,6 +72,7 @@ Temporary Items
 .apdisk
 
 # output files
-Chapter05/sorted_nums.txt
-Chapter05/mandelbrot.png
-Chapter05/thumbs/*_thumb.png
+Chapter05-scalability/sorted_nums.txt
+Chapter05-scalability/mandelbrot.png
+Chapter05-scalability/thumbs/*_thumb.png
+Chapter10-debugging/myapp.log
